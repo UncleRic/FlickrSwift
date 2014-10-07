@@ -123,12 +123,7 @@ extension ViewController: UICollectionViewDataSource {
             }) // ...end completion.
             
         }
-        
-        
-        
         return cell as UICollectionViewCell
-        
-        
     }
     
 }
