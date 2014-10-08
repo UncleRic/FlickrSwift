@@ -51,31 +51,47 @@ public func getURLForString(str:String) -> NSURL {
 // -----------------------------------------------------------------------------------------------------
 
 func buildFlickrURLWithParameters(parameters:Dictionary<String,String>) -> NSURL {
-    var urlString = NSMutableString.stringWithString(flickrBaseURL)
+    var urlString = flickrBaseURL
     for (key,value) in parameters {
-        let myValue = value.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)! // ...this doesn't work.
-        urlString.appendFormat("%@=%@&", key,myValue)
+        urlString += key+"="+value+"&"
     }
-    let url = NSURL.URLWithString(urlString)
-    return url
+    
+    urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+    var url = NSURL(string:urlString)
+    
+    return url!
 }
 
 // -----------------------------------------------------------------------------------------------------
 
 func stringWithData(data:NSData) -> String {
-    let result = NSString(data:data,  encoding:NSUTF8StringEncoding)
-    return result
+    let result = NSString(data:data, encoding:NSUTF8StringEncoding)
+    return result!
 }
 
 // -----------------------------------------------------------------------------------------------------
 
 func stringByRemovingFlickrJavaScriptFromData(data:NSData) -> String {
+    let myRange = NSMakeRange(0, 100)
     let myString = stringWithData(data) as NSString
-    var mutableString = NSMutableString(format: myString)
+    
+    var mutableString = NSMutableString(string: myString)
+    
     var range = NSMakeRange(0, "jsonFlickrApi(".length)
     mutableString.deleteCharactersInRange(range)
+    
+    // -------------------------------------------------
+    // ...every so often, a remaining '(' screws up the JSON parser.  So test again & remove it:
+    range = NSMakeRange(0, 1)
+    if mutableString.substringWithRange(range) == "(" {
+        mutableString.deleteCharactersInRange(range)
+    }
+    
+    // -------------------------------------------------
+    // ...delete the trailing ')' character
     range = NSMakeRange(mutableString.length - 1,1)
     mutableString.deleteCharactersInRange(range)
+    
     return mutableString
 }
 

@@ -32,23 +32,28 @@ class ViewController: UIViewController {
         
         let url = getURLForString(searchString)
         
-        var gPhotoData:Array<Dictionary<String,AnyObject>>?
+        var photoData:Array<Dictionary<String,AnyObject>>?
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data, response, error) in
             if let httpRes = response as? NSHTTPURLResponse {
                 if httpRes.statusCode == 200 {
                     let string = stringByRemovingFlickrJavaScriptFromData(data)
                     let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+                    var jsonError:NSError?
+                    let JSONDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments, error: &jsonError) as NSDictionary!
                     
-                    let JSONDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments, error: nil) as NSDictionary!
+                    if let error = jsonError {
+                        println("*** ERROR found in JSONDict parsing. ****")
+                        return;
+                    }
                     let photos: AnyObject? = JSONDict["photos"]
                     
-                    gPhotoData = (photos!["photo"] as Array<Dictionary<String,AnyObject>>)
+                    photoData = (photos!["photo"] as Array<Dictionary<String,AnyObject>>)
                     
-                    let myCount = (gPhotoData!.count - 1)
+                    let myCount = (photoData!.count - 1)
                     
                     for index in 0...myCount {
-                        let downloader:ImageDownloader = ImageDownloader(dict: gPhotoData![index])
+                        let downloader:ImageDownloader = ImageDownloader(dict: photoData![index])
                         gDownloaders.addObject(downloader)
                     }
                     
@@ -66,7 +71,7 @@ class ViewController: UIViewController {
         
         task.resume()
         
-    } // ...end class ViewController().
+    }
     
     // =======================================================================================================================
     // MARK: -
@@ -114,7 +119,7 @@ extension ViewController: UICollectionViewDataSource {
             var urlString:String = myDict["url_sq"]! as String
             let url = NSURL(string:urlString)
             
-            currentImageDownloader.downloadImageAtURL(url, completion: {(image:UIImage?, error:NSError?) in
+            currentImageDownloader.downloadImageAtURL(url!, completion: {(image:UIImage?, error:NSError?) in
                 if let myImage = image {
                     photoImageView.image = myImage
                 } else if let myError = error {
@@ -123,7 +128,12 @@ extension ViewController: UICollectionViewDataSource {
             }) // ...end completion.
             
         }
+        
+        
+        
         return cell as UICollectionViewCell
+        
+        
     }
     
 }

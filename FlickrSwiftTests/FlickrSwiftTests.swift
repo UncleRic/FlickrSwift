@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-let urlString = "https://api.flickr.com/services/rest/?format=json&api_key=ebbefd0c0a07c996f7867f014778adf7&text=Ric&extras=url_t,%20url_s,%20url_m,%20url_sq&method=flickr.photos.search&"
+let urlString = "https://api.flickr.com/services/rest/?format=json&method=flickr.photos.search&extras=url_t,%20url_s,%20url_m,%20url_sq&text=Ric&api_key=ebbefd0c0a07c996f7867f014778adf7&"
 
 class FlickrSwiftTests: XCTestCase {
     
@@ -25,8 +25,8 @@ class FlickrSwiftTests: XCTestCase {
     
     func testURLBuild() {
         let url = getURLForString("Ric")
-        let testURL = NSURL.URLWithString(urlString)
-        XCTAssertEqual(testURL, url, "URL String doesn't match.")
+        let testURL = NSURL(string:urlString)
+        XCTAssertEqual(testURL!, url, "URL String doesn't match.")
     }
     
     
