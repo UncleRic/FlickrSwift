@@ -74,9 +74,7 @@ func stringWithData(data:NSData) -> String {
 func stringByRemovingFlickrJavaScriptFromData(data:NSData) -> String {
     let myRange = NSMakeRange(0, 100)
     let myString = stringWithData(data) as NSString
-    
     var mutableString = NSMutableString(string: myString)
-    
     var range = NSMakeRange(0, "jsonFlickrApi(".length)
     mutableString.deleteCharactersInRange(range)
     

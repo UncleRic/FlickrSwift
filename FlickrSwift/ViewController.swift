@@ -30,17 +30,18 @@ class ViewController: UIViewController {
     
     func fetchFlickrPhotoWithSearchString(searchString:String) {
         
-        let url = getURLForString(searchString)
+      let url = getURLForString("Ric")
         
         var photoData:Array<Dictionary<String,AnyObject>>?
         
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data, response, error) in
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data:NSData!, response: NSURLResponse!, error:NSError!) in
             if let httpRes = response as? NSHTTPURLResponse {
                 if httpRes.statusCode == 200 {
                     let string = stringByRemovingFlickrJavaScriptFromData(data)
                     let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
                     var jsonError:NSError?
-                    let JSONDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments, error: &jsonError) as NSDictionary!
+                    //TODO: Use Optional handler for NSDictionary.  Curently NSDictionary doesn't handle optionals; filed an Apple Bug accordingly.
+                    let JSONDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments, error: &jsonError) as NSDictionary
                     
                     if let error = jsonError {
                         println("*** ERROR found in JSONDict parsing. ****")
@@ -62,10 +63,18 @@ class ViewController: UIViewController {
                     })
                     
                 } else {
-                    println("*** ERROR: http status code: \(httpRes.statusCode)")
+                    let controller = UIAlertController(title: "Service Not Found", message: "Code: \(httpRes.statusCode)\n Check your URL value.", preferredStyle: .Alert)
+                    let myAlertAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+                    controller.addAction(myAlertAction)
+                    self.presentViewController(controller, animated:true, completion:nil)
+                    return;
                 }
             } else {
-                println("*** ERROR: Bad Response: \(response)")
+                let controller = UIAlertController(title: "No Wi-Fi", message: "Wi-Fi needs to be restored before continuing.", preferredStyle: .Alert)
+                let myAlertAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+                controller.addAction(myAlertAction)
+                self.presentViewController(controller, animated:true, completion:nil)
+                return;
             }
         }
         

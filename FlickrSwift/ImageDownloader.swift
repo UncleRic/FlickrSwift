@@ -44,7 +44,3 @@ class ImageDownloader {
     }
 }
 
-
-
-
-
