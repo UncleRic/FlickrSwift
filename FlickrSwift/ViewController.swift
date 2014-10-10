@@ -8,7 +8,7 @@
 import UIKit
 
 var gDownloaders:NSMutableArray = NSMutableArray()
-var currentImageDownloader:ImageDownloader?
+var gCurrentImageDownloader:ImageDownloader?
 var gSelectedItemIndex:Int?
 
 class ViewController: UIViewController {
@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     
     func fetchFlickrPhotoWithSearchString(searchString:String) {
         
-      let url = getURLForString("Ric")
+        let url = getURLForString("Ric")
         
         var photoData:Array<Dictionary<String,AnyObject>>?
         
@@ -118,8 +118,8 @@ extension ViewController: UICollectionViewDataSource {
         let cell: AnyObject = collectionView.dequeueReusableCellWithReuseIdentifier("photoCell", forIndexPath:indexPath)
         let photoImageView = cell.viewWithTag!(1) as UIImageView
         
-        gSelectedItemIndex = indexPath.item as Int
-        let currentImageDownloader:ImageDownloader = gDownloaders[gSelectedItemIndex!] as ImageDownloader
+        let selectedItemIndex = indexPath.item as Int
+        let currentImageDownloader:ImageDownloader = gDownloaders[selectedItemIndex] as ImageDownloader
         
         if let image:UIImage = currentImageDownloader.image {
             photoImageView.image = image
@@ -135,15 +135,29 @@ extension ViewController: UICollectionViewDataSource {
                     println("*** ERROR in cell: \(myError.userInfo)")
                 }
             }) // ...end completion.
-            
         }
-        
-        
-        
         return cell as UICollectionViewCell
-        
-        
     }
-    
 }
+
+// -----------------------------------------------------------------------------------------------------
+
+extension ViewController {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showDetail" {
+            let selectedIndexPath = self.collectionView.indexPathsForSelectedItems() as Array
+            gSelectedItemIndex = selectedIndexPath[0].item
+            if let myIndex = gSelectedItemIndex {
+                gCurrentImageDownloader = gDownloaders.objectAtIndex(myIndex) as? ImageDownloader
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
 

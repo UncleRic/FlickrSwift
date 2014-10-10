@@ -10,6 +10,7 @@
 		18425F6A19DC9B47007448D5 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18425F6919DC9B47007448D5 /* ImageDownloader.swift */; };
 		186CEF7619DA50C100066678 /* Flickr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186CEF7519DA50C100066678 /* Flickr.swift */; };
 		186CEF7719DA50C100066678 /* Flickr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186CEF7519DA50C100066678 /* Flickr.swift */; };
+		18DF4FE919E88CA2007C0EAC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF4FE819E88CA2007C0EAC /* DetailViewController.swift */; };
 		18ECC9BB19DA02E7000BBB78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECC9BA19DA02E7000BBB78 /* AppDelegate.swift */; };
 		18ECC9BD19DA02E7000BBB78 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECC9BC19DA02E7000BBB78 /* ViewController.swift */; };
 		18ECC9C019DA02E7000BBB78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18ECC9BE19DA02E7000BBB78 /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		18425F6919DC9B47007448D5 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		186CEF7519DA50C100066678 /* Flickr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flickr.swift; sourceTree = "<group>"; };
+		18DF4FE819E88CA2007C0EAC /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		18ECC9B519DA02E7000BBB78 /* FlickrSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18ECC9B919DA02E7000BBB78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18ECC9BA19DA02E7000BBB78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				18ECC9BA19DA02E7000BBB78 /* AppDelegate.swift */,
 				18ECC9BC19DA02E7000BBB78 /* ViewController.swift */,
+				18DF4FE819E88CA2007C0EAC /* DetailViewController.swift */,
 				18425F6919DC9B47007448D5 /* ImageDownloader.swift */,
 				186CEF7519DA50C100066678 /* Flickr.swift */,
 				18ECC9BE19DA02E7000BBB78 /* Main.storyboard */,
@@ -235,6 +238,7 @@
 			files = (
 				18ECC9BD19DA02E7000BBB78 /* ViewController.swift in Sources */,
 				186CEF7619DA50C100066678 /* Flickr.swift in Sources */,
+				18DF4FE919E88CA2007C0EAC /* DetailViewController.swift in Sources */,
 				18425F6A19DC9B47007448D5 /* ImageDownloader.swift in Sources */,
 				18ECC9BB19DA02E7000BBB78 /* AppDelegate.swift in Sources */,
 			);

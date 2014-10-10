@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="afJ-Sr-TYb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6249" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="afJ-Sr-TYb">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6243"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -10,8 +10,8 @@
             <objects>
                 <viewController title="Ric's Flickr Viewer" id="vXZ-lx-hvc" customClass="ViewController" customModule="FlickrSwift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="JLR-9G-M90"/>
-                        <viewControllerLayoutGuide type="bottom" id="gZc-y2-Ue7"/>
+                        <viewControllerLayoutGuide type="top" id="F5g-Hb-38o"/>
+                        <viewControllerLayoutGuide type="bottom" id="UPg-z5-7Rn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -49,12 +49,15 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="NWk-Dd-NrO" secondAttribute="bottom" id="Kxf-0T-R1v"/>
-                                            <constraint firstAttribute="trailing" secondItem="NWk-Dd-NrO" secondAttribute="trailing" id="M2w-cz-cPQ"/>
-                                            <constraint firstItem="NWk-Dd-NrO" firstAttribute="top" secondItem="3vL-4M-XiO" secondAttribute="top" id="gT7-lh-DPa"/>
-                                            <constraint firstItem="NWk-Dd-NrO" firstAttribute="leading" secondItem="3vL-4M-XiO" secondAttribute="leading" id="uPZ-2a-ibm"/>
+                                            <constraint firstItem="NWk-Dd-NrO" firstAttribute="leading" secondItem="3vL-4M-XiO" secondAttribute="leading" id="5cE-fO-mh1"/>
+                                            <constraint firstItem="NWk-Dd-NrO" firstAttribute="top" secondItem="3vL-4M-XiO" secondAttribute="top" id="iBL-ji-coP"/>
+                                            <constraint firstAttribute="trailing" secondItem="NWk-Dd-NrO" secondAttribute="trailing" id="idc-Qp-cWh"/>
+                                            <constraint firstAttribute="bottom" secondItem="NWk-Dd-NrO" secondAttribute="bottom" id="ot7-8x-bqB"/>
                                         </constraints>
                                         <size key="customSize" width="75" height="75"/>
+                                        <connections>
+                                            <segue destination="uYr-C3-rgV" kind="push" identifier="showDetail" id="HPm-WG-fd2"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -74,14 +77,14 @@
                         </subviews>
                         <color key="backgroundColor" red="0.79795017739999996" green="0.93767279579999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="gZc-y2-Ue7" firstAttribute="top" secondItem="LsC-UM-cpF" secondAttribute="bottom" constant="8" symbolic="YES" id="2cP-i0-Nhg"/>
-                            <constraint firstItem="kIk-V0-QBN" firstAttribute="baseline" secondItem="LsC-UM-cpF" secondAttribute="baseline" id="Sm4-2z-BdE"/>
-                            <constraint firstItem="226-do-SOk" firstAttribute="top" secondItem="JLR-9G-M90" secondAttribute="bottom" constant="25" id="Y7p-Pn-k1c"/>
-                            <constraint firstItem="gZc-y2-Ue7" firstAttribute="top" secondItem="226-do-SOk" secondAttribute="bottom" constant="99" id="i9N-q4-sY9"/>
-                            <constraint firstItem="226-do-SOk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="14" id="qTJ-53-xJK"/>
-                            <constraint firstItem="226-do-SOk" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="szH-UT-py5"/>
-                            <constraint firstItem="LsC-UM-cpF" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="v2V-p7-GnG"/>
-                            <constraint firstItem="226-do-SOk" firstAttribute="trailing" secondItem="kIk-V0-QBN" secondAttribute="trailing" id="v33-QH-vmo"/>
+                            <constraint firstItem="226-do-SOk" firstAttribute="top" secondItem="F5g-Hb-38o" secondAttribute="bottom" constant="25" id="2lQ-On-rst"/>
+                            <constraint firstItem="226-do-SOk" firstAttribute="trailing" secondItem="kIk-V0-QBN" secondAttribute="trailing" id="A9C-Ce-IYO"/>
+                            <constraint firstItem="LsC-UM-cpF" firstAttribute="baseline" secondItem="kIk-V0-QBN" secondAttribute="baseline" id="HMo-vB-MCy"/>
+                            <constraint firstItem="LsC-UM-cpF" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="KLf-gF-8o8"/>
+                            <constraint firstItem="226-do-SOk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="14" id="eht-69-THc"/>
+                            <constraint firstItem="LsC-UM-cpF" firstAttribute="top" secondItem="226-do-SOk" secondAttribute="bottom" constant="61" id="fdc-CJ-766"/>
+                            <constraint firstItem="UPg-z5-7Rn" firstAttribute="top" secondItem="LsC-UM-cpF" secondAttribute="bottom" constant="8" symbolic="YES" id="hcl-e5-eIN"/>
+                            <constraint firstItem="226-do-SOk" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="jaG-1B-h3C"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="cIH-xX-U8r"/>
@@ -92,6 +95,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="684" y="307"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="r72-Tm-dab">
+            <objects>
+                <viewController id="uYr-C3-rgV" customClass="DetailViewController" customModule="FlickrSwift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="H6k-eo-mMG"/>
+                        <viewControllerLayoutGuide type="bottom" id="5TN-cv-pnn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="y0Y-3v-Lpx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="d7f-5Q-A2C" userLabel="Detailed-Image View" customClass="UIImageView">
+                                <rect key="frame" x="10" y="84" width="300" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.72256713699999997" green="0.84031080160000005" blue="0.61844744730000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="d7f-5Q-A2C" firstAttribute="leading" secondItem="y0Y-3v-Lpx" secondAttribute="leadingMargin" constant="-6" id="LEp-kb-xfR"/>
+                            <constraint firstItem="d7f-5Q-A2C" firstAttribute="top" secondItem="H6k-eo-mMG" secondAttribute="bottom" constant="20" id="Lod-A1-j1g"/>
+                            <constraint firstItem="d7f-5Q-A2C" firstAttribute="centerX" secondItem="y0Y-3v-Lpx" secondAttribute="centerX" id="Ped-ts-0jD"/>
+                            <constraint firstItem="5TN-cv-pnn" firstAttribute="top" secondItem="d7f-5Q-A2C" secondAttribute="bottom" constant="184" id="ZDC-LU-uv0"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="w2g-KJ-IL3"/>
+                    <connections>
+                        <outlet property="imageView" destination="d7f-5Q-A2C" id="jFR-PN-3xr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TLp-Bn-cOo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1058" y="329"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XRP-Cg-1bj">
