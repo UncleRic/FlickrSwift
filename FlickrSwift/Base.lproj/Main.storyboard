@@ -99,7 +99,7 @@
         <!--Detail View Controller-->
         <scene sceneID="r72-Tm-dab">
             <objects>
-                <viewController id="uYr-C3-rgV" customClass="DetailViewController" customModule="FlickrSwift" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" id="uYr-C3-rgV" customClass="DetailViewController" customModule="FlickrSwift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H6k-eo-mMG"/>
                         <viewControllerLayoutGuide type="bottom" id="5TN-cv-pnn"/>
@@ -110,10 +110,9 @@
                         <subviews>
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="d7f-5Q-A2C" userLabel="Detailed-Image View" customClass="UIImageView">
                                 <rect key="frame" x="10" y="84" width="300" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.72256713699999997" green="0.84031080160000005" blue="0.61844744730000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.79795017739999996" green="0.93767279579999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="d7f-5Q-A2C" firstAttribute="leading" secondItem="y0Y-3v-Lpx" secondAttribute="leadingMargin" constant="-6" id="LEp-kb-xfR"/>
                             <constraint firstItem="d7f-5Q-A2C" firstAttribute="top" secondItem="H6k-eo-mMG" secondAttribute="bottom" constant="20" id="Lod-A1-j1g"/>

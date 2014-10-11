@@ -20,8 +20,12 @@ class ViewController: UIViewController {
         fetchFlickrPhotoWithSearchString("Ric");
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.title = "Flickr Viewer"
+        if let currentImageDownloader = gCurrentImageDownloader {
+            gDownloaders.replaceObjectAtIndex(gSelectedItemIndex!, withObject: gCurrentImageDownloader!)
+        }
     }
     
     // -----------------------------------------------------------------------------------------------------

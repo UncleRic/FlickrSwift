@@ -19,8 +19,24 @@ class DetailViewController: UIViewController {
         } else {
             self.title = "No Title"
         }
+        self.imageView.hidden = false
         displayBigImage()
     }
+    
+    // -----------------------------------------------------------------------------------------------------------------------
+    
+    override func willMoveToParentViewController(parent: UIViewController?) {
+    
+        if let myParent = parent {
+            if let myBigImage  = self.imageView?.image {
+                gCurrentImageDownloader?.bigImage = myBigImage
+            }
+        } else {
+            // Returning to MainViewController
+            imageView.hidden = true
+        }
+    }
+
     
     // -----------------------------------------------------------------------------------------------------
     
