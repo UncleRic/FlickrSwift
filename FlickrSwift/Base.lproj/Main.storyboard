@@ -8,7 +8,7 @@
         <!--Ric's Flickr Viewer-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController title="Ric's Flickr Viewer" id="vXZ-lx-hvc" customClass="ViewController" customModule="FlickrSwift" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Ric's Flickr Viewer" id="vXZ-lx-hvc" customClass="MainViewController" customModule="FlickrSwift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="F5g-Hb-38o"/>
                         <viewControllerLayoutGuide type="bottom" id="UPg-z5-7Rn"/>
@@ -17,15 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LsC-UM-cpF">
-                                <rect key="frame" x="16" y="530" width="98" height="30"/>
-                                <state key="normal" title="Do Something">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="doSomething:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GRM-PC-bM0"/>
-                                </connections>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="226-do-SOk">
                                 <rect key="frame" x="30" y="89" width="260" height="380"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Vb2-wq-vxx">
@@ -65,6 +56,16 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="eCa-qM-W3g"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LsC-UM-cpF">
+                                <rect key="frame" x="16" y="530" width="98" height="30"/>
+                                <state key="normal" title="Do Something">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="doSomething:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GRM-PC-bM0"/>
+                                    <action selector="doSomethingAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="wvp-c2-EKe"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIk-V0-QBN">
                                 <rect key="frame" x="260" y="530" width="30" height="30"/>
                                 <state key="normal" title="Exit">

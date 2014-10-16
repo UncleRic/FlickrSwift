@@ -1,4 +1,4 @@
-//  ViewController.swift
+//  MainViewController.swift
 //  FlickrSwift
 //
 //  Created by Frederick C. Lee on 9/29/14.
@@ -11,7 +11,7 @@ var gDownloaders:NSMutableArray = NSMutableArray()
 var gCurrentImageDownloader:ImageDownloader?
 var gSelectedItemIndex:Int?
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -86,16 +86,36 @@ class ViewController: UIViewController {
         
     }
     
-    // =======================================================================================================================
-    // MARK: -
+    // -----------------------------------------------------------------------------------------------------
+
     func doSomething() {
-        //   ...something
+        let requestTokenURL = getRequestTokenURL()   // 1.
+        
+        // (2)...counterpart to (1) func() "complReturn"
+        fetchResponseForRequest(requestTokenURL, {(statusCode:Int?, response:String?, error:NSError?) in
+            if let myError = error {
+                println(error)
+            } else {
+                if let myStatusCode = statusCode {
+                    if myStatusCode != 200 {
+                        let controller = UIAlertController(title: "Unable to Generate Request Token", message: "Code: \(myStatusCode)\n Check your URL value.", preferredStyle: .Alert)
+                        let myAlertAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+                        controller.addAction(myAlertAction)
+                        self.presentViewController(controller, animated:true, completion:nil)
+                        return;
+                    } else {
+                        // do Something with data.
+                    }
+                }
+            }
+        }) // ...end completion.
     }
     
-    // -----------------------------------------------------------------------------------------------------
+    // =======================================================================================================================
     // MARK: - Action Methods
     
-    @IBAction func doSomething(sender: AnyObject) {
+
+    @IBAction func doSomethingAction(sender: UIButton) {
         doSomething()
     }
     
@@ -108,7 +128,7 @@ class ViewController: UIViewController {
 // =======================================================================================================================
 // MARK: - Extensions
 
-extension ViewController: UICollectionViewDataSource {
+extension MainViewController: UICollectionViewDataSource {
     
     // -----------------------------------------------------------------------------------------------------
     
@@ -146,7 +166,7 @@ extension ViewController: UICollectionViewDataSource {
 
 // -----------------------------------------------------------------------------------------------------
 
-extension ViewController {
+extension MainViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             let selectedIndexPath = self.collectionView.indexPathsForSelectedItems() as Array

@@ -47,6 +47,9 @@ class DetailViewController: UIViewController {
             var urlString:String?
             if let currentImageDownloader = gCurrentImageDownloader {
                 let url = NSURL(string: (currentImageDownloader.dict!["url_m"] as String))
+                
+
+              
                 currentImageDownloader.downloadImageAtURL(url!, completion: {(image, error) in
                     if let myError = error {
                         println(myError)
