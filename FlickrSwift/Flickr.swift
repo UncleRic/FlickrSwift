@@ -7,6 +7,26 @@
 
 import Foundation
 
+var gPermission:FKPermission?
+
+public enum FKPermission:Int {
+    case FKPermissionRead
+    case FKPermissionWrite
+    case FKPermissionDelete
+    func description() ->String {
+        switch self {
+        case .FKPermissionRead:
+            return "READ"
+        case .FKPermissionWrite:
+            return "WRITE"
+        case .FKPermissionDelete:
+            return "DELETE"
+        }
+    }
+}
+
+// =======================================================================================================================
+
 class FlickrKit:NSObject {
     var apiKey:NSString?
     var sharedSecret:NSString?
@@ -19,38 +39,10 @@ class FlickrKit:NSObject {
 // =======================================================================================================================
 
 extension FlickrKit {
-    
-    
-//    func userAuthorizationURLWithRequestToken(inRequestToken:NSString!, requestedPermission:FKPermission!) -> NSURL {
-//
-////        let perms = "&perms=\(requestedPermission.description())"
-////        let urlString = "http://www.flickr.com/services/oauth/authorize?oauth_token=\(inRequestToken)\(perms)" as NSString
-////        return NSURL(string: urlString)
-//    }
+    func userAuthorizationURLWithRequestToken(inRequestToken:NSString!, requestedPermission:FKPermission) -> NSURL {
+        gPermission = requestedPermission
+        let perms = "&perms=\(requestedPermission.description())"
+        let urlString = "http://www.flickr.com/services/oauth/authorize?oauth_token=\(inRequestToken)\(perms)" as NSString
+        return NSURL(string: urlString)!
+    }
 }
-
-
-//- (NSURL *)userAuthorizationURLWithRequestToken:(NSString *)inRequestToken requestedPermission:(FKPermission)permission {
-//    NSString *perms = @"";FKPermission
-//    
-//    NSString *permissionString = nil;
-//    switch (permission) {
-//    case FKPermissionRead:
-//        permissionString = @"read";
-//        break;
-//    case FKPermissionWrite:
-//        permissionString = @"write";
-//        break;
-//    case FKPermissionDelete:
-//        permissionString = @"delete";
-//        break;
-//    }
-//    
-//    self.permissionGranted = permission;
-//    
-//    perms = [NSString stringWithFormat:@"&perms=%@", permissionString];
-//    
-//    ///http://www.flickr.com/services/oauth/authorize
-//    NSString *URLString = [NSString stringWithFormat:@"http://www.flickr.com/services/oauth/authorize?oauth_token=%@%@", inRequestToken, perms];
-//    return [NSURL URLWithString:URLString];
-//}

@@ -17,15 +17,27 @@ public func FKEscapedURLString(string:NSString) -> String {
 // -----------------------------------------------------------------------------------------------------
 
 public func FKEscapedURLStringPlus(string:String) -> String {
-    return string
+    var str = CFURLCreateStringByAddingPercentEscapes(
+        nil,
+        string,
+        nil,
+        "`~!@#$^&*()=+[]\\{}|;':\",/<>?",
+        CFStringBuiltInEncodings.UTF8.rawValue
+    )
+    return str
 }
 
-//NSString *FKEscapedURLStringPlus(NSString *string) {
-//    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL, (CFStringRef)@"`~!@#$^&*()=+[]\\{}|;':\",/<>?", kCFStringEncodingUTF8);
-//    return (__bridge_transfer NSString *)escaped;
-//}
+// -----------------------------------------------------------------------------------------------------
+// MARK: - Unique ID
+
+func FKGenerateUUID() -> String {
+    let uuidString = NSUUID().UUIDString
+    return uuidString
+}
+
 
 // -----------------------------------------------------------------------------------------------------
+// MARK: - OAuthExtraction
 
 public func FKQueryParamDictionaryFromURL(url:NSURL) -> [String:String]? {
     var x:String? = url.query

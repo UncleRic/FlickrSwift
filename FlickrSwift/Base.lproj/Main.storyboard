@@ -62,8 +62,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="doSomething:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GRM-PC-bM0"/>
-                                    <action selector="doSomethingAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="wvp-c2-EKe"/>
+                                    <action selector="doSomethingAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gwp-PH-nZW"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIk-V0-QBN">

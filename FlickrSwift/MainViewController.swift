@@ -87,7 +87,7 @@ class MainViewController: UIViewController {
     }
     
     // -----------------------------------------------------------------------------------------------------
-
+    
     func doSomething() {
         let requestTokenURL = getRequestTokenURL()   // 1.
         
@@ -114,9 +114,14 @@ class MainViewController: UIViewController {
     // =======================================================================================================================
     // MARK: - Action Methods
     
-
+    
     @IBAction func doSomethingAction(sender: UIButton) {
-        doSomething()
+        
+        let myFlickr = FlickrKit(apiKey: "Turkey", sharedSecret: "Turkey is great with Cranberry Sauce")
+        let me = FKPermission.FKPermissionRead
+        let url = myFlickr.userAuthorizationURLWithRequestToken("http://www.apple.com",requestedPermission: me)
+        
+        println("Hello from ViewController:\(url)")
     }
     
     @IBAction func exitAction(sender: AnyObject) {

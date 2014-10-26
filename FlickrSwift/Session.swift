@@ -6,28 +6,27 @@
 // -----------------------------------------------------------------------------------------------------
 
 import Foundation
-import UIKit
 
 public enum FKHttpMethod:Int {
     case FKHttpMethodGET = 0
     case FKHttpMethodPOST
 }
 
-public enum FKPermission:Int {
-    case FKPermissionRead
-    case FKPermissionWrite
-    case FKPermissionDelete
-    func description() ->String {
-        switch self {
-        case .FKPermissionRead:
-            return "READ"
-        case .FKPermissionWrite:
-            return "WRITE"
-        case .FKPermissionDelete:
-            return "DELETE"
-        }
-    }
-}
+//public enum FKPermission:Int {
+//    case FKPermissionRead
+//    case FKPermissionWrite
+//    case FKPermissionDelete
+//    func description() ->String {
+//        switch self {
+//        case .FKPermissionRead:
+//            return "READ"
+//        case .FKPermissionWrite:
+//            return "WRITE"
+//        case .FKPermissionDelete:
+//            return "DELETE"
+//        }
+//    }
+//}
 
 public enum FKPhotoSize:Int {
     case FKPhotoSizeUnknown = 0
