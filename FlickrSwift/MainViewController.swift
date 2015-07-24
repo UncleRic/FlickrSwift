@@ -9,7 +9,7 @@ import UIKit
 
 var gDownloaders:NSMutableArray = NSMutableArray()
 var gCurrentImageDownloader:ImageDownloader?
-var gSelectedItemIndex:Int?
+var gSelectedItemIndex:Int = 0
 
 class MainViewController: UIViewController {
     
@@ -23,8 +23,8 @@ class MainViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Flickr Viewer"
-        if let currentImageDownloader = gCurrentImageDownloader {
-            gDownloaders.replaceObjectAtIndex(gSelectedItemIndex!, withObject: gCurrentImageDownloader!)
+        if nil != gCurrentImageDownloader {
+            gDownloaders.replaceObjectAtIndex(gSelectedItemIndex, withObject: gCurrentImageDownloader!)
         }
     }
     
@@ -38,33 +38,32 @@ class MainViewController: UIViewController {
         
         var photoData:Array<Dictionary<String,AnyObject>>?
         
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data:NSData!, response: NSURLResponse!, error:NSError!) in
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data:NSData?, response: NSURLResponse?, error:NSError?) in
             if let httpRes = response as? NSHTTPURLResponse {
                 if httpRes.statusCode == 200 {
-                    let string = stringByRemovingFlickrJavaScriptFromData(data)
-                    let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
-                    var jsonError:NSError?
-                    //TODO: Use Optional handler for NSDictionary.  Curently NSDictionary doesn't handle optionals; filed an Apple Bug accordingly.
-                    let JSONDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments, error: &jsonError) as NSDictionary
+                    let string = stringByRemovingFlickrJavaScriptFromData(data!)
+                    let myData = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
                     
-                    if let error = jsonError {
-                        println("*** ERROR found in JSONDict parsing. ****")
-                        return;
+                    do {
+                        let JSONDict: NSDictionary = try  NSJSONSerialization.JSONObjectWithData(myData!, options: .AllowFragments) as! NSDictionary
+                        
+                        let photos: AnyObject? = JSONDict["photos"]
+                        
+                        photoData = (photos!["photo"] as! Array<Dictionary<String,AnyObject>>)
+                        
+                        let myCount = (photoData!.count - 1)
+                        
+                        for index in 0...myCount {
+                            let downloader:ImageDownloader = ImageDownloader(dict: photoData![index])
+                            gDownloaders.addObject(downloader)
+                        }
+                        
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.collectionView.reloadData();
+                        })
+                    } catch _ {
+                        
                     }
-                    let photos: AnyObject? = JSONDict["photos"]
-                    
-                    photoData = (photos!["photo"] as Array<Dictionary<String,AnyObject>>)
-                    
-                    let myCount = (photoData!.count - 1)
-                    
-                    for index in 0...myCount {
-                        let downloader:ImageDownloader = ImageDownloader(dict: photoData![index])
-                        gDownloaders.addObject(downloader)
-                    }
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.collectionView.reloadData();
-                    })
                     
                 } else {
                     let controller = UIAlertController(title: "Service Not Found", message: "Code: \(httpRes.statusCode)\n Check your URL value.", preferredStyle: .Alert)
@@ -92,9 +91,9 @@ class MainViewController: UIViewController {
         let requestTokenURL = getRequestTokenURL()   // 1.
         
         // (2)...counterpart to (1) func() "complReturn"
-        fetchResponseForRequest(requestTokenURL, {(statusCode:Int?, response:String?, error:NSError?) in
+        fetchResponseForRequest(requestTokenURL, completion: {(statusCode:Int?, response:String?, error:NSError?) in
             if let myError = error {
-                println(error)
+                print(error)
             } else {
                 if let myStatusCode = statusCode {
                     if myStatusCode != 200 {
@@ -121,7 +120,7 @@ class MainViewController: UIViewController {
         let me = FKPermission.FKPermissionRead
         let url = myFlickr.userAuthorizationURLWithRequestToken("http://www.apple.com",requestedPermission: me)
         
-        println("Hello from ViewController:\(url)")
+        print("Hello from ViewController:\(url)")
     }
     
     @IBAction func exitAction(sender: AnyObject) {
@@ -145,27 +144,27 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: AnyObject = collectionView.dequeueReusableCellWithReuseIdentifier("photoCell", forIndexPath:indexPath)
-        let photoImageView = cell.viewWithTag!(1) as UIImageView
+        let photoImageView = cell.viewWithTag!(1) as! UIImageView
         
         let selectedItemIndex = indexPath.item as Int
-        let currentImageDownloader:ImageDownloader = gDownloaders[selectedItemIndex] as ImageDownloader
+        let currentImageDownloader:ImageDownloader = gDownloaders[selectedItemIndex] as! ImageDownloader
         
         if let image:UIImage = currentImageDownloader.image {
             photoImageView.image = image
         } else {
             var myDict = currentImageDownloader.dict!
-            var urlString:String = myDict["url_sq"]! as String
+            let urlString:String = myDict["url_sq"]! as! String
             let url = NSURL(string:urlString)
             
             currentImageDownloader.downloadImageAtURL(url!, completion: {(image:UIImage?, error:NSError?) in
                 if let myImage = image {
                     photoImageView.image = myImage
                 } else if let myError = error {
-                    println("*** ERROR in cell: \(myError.userInfo)")
+                    print("*** ERROR in cell: \(myError.userInfo)")
                 }
             }) // ...end completion.
         }
-        return cell as UICollectionViewCell
+        return cell as! UICollectionViewCell
     }
 }
 
@@ -174,11 +173,9 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
-            let selectedIndexPath = self.collectionView.indexPathsForSelectedItems() as Array
-            gSelectedItemIndex = selectedIndexPath[0].item
-            if let myIndex = gSelectedItemIndex {
-                gCurrentImageDownloader = gDownloaders.objectAtIndex(myIndex) as? ImageDownloader
-            }
+            let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems() as [NSIndexPath]?
+            gSelectedItemIndex = selectedIndexPaths![0].item
+            gCurrentImageDownloader = gDownloaders.objectAtIndex(gSelectedItemIndex) as? ImageDownloader
         }
     }
 }

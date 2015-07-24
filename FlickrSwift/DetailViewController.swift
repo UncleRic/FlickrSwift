@@ -15,7 +15,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         if let currentImageDownloader = gCurrentImageDownloader {
-            self.title = (currentImageDownloader.dict!["title"] as String)
+            self.title = (currentImageDownloader.dict!["title"] as! String)
         } else {
             self.title = "No Title"
         }
@@ -27,7 +27,7 @@ class DetailViewController: UIViewController {
     
     override func willMoveToParentViewController(parent: UIViewController?) {
     
-        if let myParent = parent {
+        if let _ = parent {
             if let myBigImage  = self.imageView?.image {
                 gCurrentImageDownloader?.bigImage = myBigImage
             }
@@ -44,15 +44,13 @@ class DetailViewController: UIViewController {
         if let image = gCurrentImageDownloader!.bigImage {
             self.imageView.image = image;
         } else {
-            var urlString:String?
+            
             if let currentImageDownloader = gCurrentImageDownloader {
-                let url = NSURL(string: (currentImageDownloader.dict!["url_m"] as String))
-                
-
+                let url = NSURL(string: (currentImageDownloader.dict!["url_m"] as! String))
               
                 currentImageDownloader.downloadImageAtURL(url!, completion: {(image, error) in
                     if let myError = error {
-                        println(myError)
+                        print(myError)
                     } else {
                         self.imageView.image = image;
                     }

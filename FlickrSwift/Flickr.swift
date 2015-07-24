@@ -43,6 +43,6 @@ extension FlickrKit {
         gPermission = requestedPermission
         let perms = "&perms=\(requestedPermission.description())"
         let urlString = "http://www.flickr.com/services/oauth/authorize?oauth_token=\(inRequestToken)\(perms)" as NSString
-        return NSURL(string: urlString)!
+        return NSURL(string: urlString as String)!
     }
 }

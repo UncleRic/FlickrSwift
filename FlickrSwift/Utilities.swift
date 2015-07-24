@@ -11,20 +11,20 @@ import Foundation
 
 public func FKEscapedURLString(string:NSString) -> String {
     string.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-    return string
+    return string as String
 }
 
 // -----------------------------------------------------------------------------------------------------
 
 public func FKEscapedURLStringPlus(string:String) -> String {
-    var str = CFURLCreateStringByAddingPercentEscapes(
+    let str = CFURLCreateStringByAddingPercentEscapes(
         nil,
         string,
         nil,
         "`~!@#$^&*()=+[]\\{}|;':\",/<>?",
         CFStringBuiltInEncodings.UTF8.rawValue
     )
-    return str
+    return str as String
 }
 
 // -----------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ func FKGenerateUUID() -> String {
 // MARK: - OAuthExtraction
 
 public func FKQueryParamDictionaryFromURL(url:NSURL) -> [String:String]? {
-    var x:String? = url.query
+    let x:String? = url.query
     if let urlString = x {
         let params = FKQueryParamDictionaryFromQueryString(urlString)
     } else {
@@ -55,8 +55,8 @@ public func FKQueryParamDictionaryFromURL(url:NSURL) -> [String:String]? {
 
 func FKQueryParamDictionaryFromQueryString(queryString:NSString) -> NSDictionary {
     let vars = queryString.componentsSeparatedByString("&") as [String]
-    println("vars= \(vars)")
-    var keyValues = NSMutableDictionary()
+    print("vars= \(vars)")
+    let keyValues = NSMutableDictionary()
     for (val) in vars {
         let kv = val.componentsSeparatedByString("=")
         if (kv.count == 2) {

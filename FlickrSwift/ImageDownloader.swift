@@ -28,7 +28,7 @@ class ImageDownloader {
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data, response, error) in
             if let httpRes = response as? NSHTTPURLResponse {
                 if httpRes.statusCode == 200 {
-                    var myImage = UIImage(data:data)
+                    let myImage = UIImage(data:data!)
                     dispatch_async(dispatch_get_main_queue(), {
                         completion(image:myImage,error:nil)
                     })

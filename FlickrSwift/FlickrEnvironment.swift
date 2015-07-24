@@ -104,7 +104,7 @@ var timeStamp:NSTimeInterval {
 
 var nonce:String {
     let temp = NSUUID().UUIDString
-    var nonce = temp.stringByReplacingOccurrencesOfString("-", withString: "")
+    let nonce = temp.stringByReplacingOccurrencesOfString("-", withString: "")
     return nonce as String
 }
 
@@ -163,7 +163,7 @@ class OAuth: NSObject {
 // MARK: - Flickr Methods
 
 public func getRequestTokenURL() -> NSURL {
-    let url = buildFlickrURLWith(flickrRequestToken, oauthParameters)
+    let url = buildFlickrURLWith(flickrRequestToken, parameters: oauthParameters)
     return url
 }
 
@@ -174,7 +174,7 @@ public func getURLForString(str:String) -> NSURL {
         flickrParamAppKey : flickrAPIKey,
         flickrParamText : str, flickrParamExtras : "url_t, url_s, url_m, url_sq"]
     
-    let url = buildFlickrURLWith(flickrBaseURL, parameters)
+    let url = buildFlickrURLWith(flickrBaseURL, parameters: parameters)
     return url
 }
 
@@ -187,7 +187,7 @@ func buildFlickrURLWith(baseURL:String, parameters:Dictionary<String,String>) ->
     }
     
     urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-    var url = NSURL(string:urlString)
+    let url = NSURL(string:urlString)
     
     return url!
     
@@ -197,7 +197,7 @@ func buildFlickrURLWith(baseURL:String, parameters:Dictionary<String,String>) ->
 
 func stringWithData(data:NSData) -> String {
     let result = NSString(data:data, encoding:NSUTF8StringEncoding)
-    return result!
+    return result! as String
 }
 
 // -----------------------------------------------------------------------------------------------------
@@ -205,7 +205,7 @@ func stringWithData(data:NSData) -> String {
 func stringByRemovingFlickrJavaScriptFromData(data:NSData) -> String {
     let myRange = NSMakeRange(0, 100)
     let myString = stringWithData(data) as NSString
-    var mutableString = NSMutableString(string: myString)
+    let mutableString = NSMutableString(string: myString)
     var range = NSMakeRange(0, "jsonFlickrApi(".length)
     mutableString.deleteCharactersInRange(range)
     
@@ -221,18 +221,18 @@ func stringByRemovingFlickrJavaScriptFromData(data:NSData) -> String {
     range = NSMakeRange(mutableString.length - 1,1)
     mutableString.deleteCharactersInRange(range)
     
-    return mutableString
+    return mutableString as String
 }
 
 // -----------------------------------------------------------------------------------------------------
 
 func stringByRemovingFlickrJavaScriptFromString(str:String) -> String {
-    var mutableString = NSMutableString(format: str)
+    let mutableString = NSMutableString(format: str)
     var range = NSMakeRange(0, "jsonFlickrApi(".length)
     mutableString.deleteCharactersInRange(range)
     range = NSMakeRange(mutableString.length - 1,1)
     mutableString.deleteCharactersInRange(range)
-    return mutableString
+    return mutableString as String
 }
 
 // =======================================================================================================================

@@ -55,7 +55,7 @@ public enum FKPhotoSize:Int {
 // MARK:- URL Encryption
 
 public func oauthURLFromBaseURL(inURL:NSURL, method:FKHttpMethod, params:[String:String]) -> NSURL {
-    let newArgs:Dictionary = signedOAuthHTTPQueryParameters(params, inURL, method)
+    let newArgs:Dictionary = signedOAuthHTTPQueryParameters(params, baseURL: inURL, method: method)
     var queryArray = NSMutableArray()
     for (key,value) in newArgs {
         let y = FKEscapedURLStringPlus(value)
@@ -114,7 +114,7 @@ func fetchResponseForRequest(url:NSURL, completion:(statusCode:Int?, string:Stri
     let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data, response, error) in
         if let httpRes = response as? NSHTTPURLResponse {
             if httpRes.statusCode == 200 {
-                let result = NSString(data: data, encoding: NSUTF8StringEncoding)
+                let result = NSString(data: data!, encoding: NSUTF8StringEncoding) as String?
                 dispatch_async(dispatch_get_main_queue(), {
                     completion(statusCode: httpRes.statusCode, string:result, error: nil)
                 })
