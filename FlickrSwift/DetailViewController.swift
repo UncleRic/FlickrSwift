@@ -19,13 +19,13 @@ class DetailViewController: UIViewController {
         } else {
             self.title = "No Title"
         }
-        self.imageView.hidden = false
+        self.imageView.isHidden = false
         displayBigImage()
     }
     
     // -----------------------------------------------------------------------------------------------------------------------
     
-    override func willMoveToParentViewController(parent: UIViewController?) {
+    override func willMove(toParentViewController parent: UIViewController?) {
     
         if let _ = parent {
             if let myBigImage  = self.imageView?.image {
@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
             }
         } else {
             // Returning to MainViewController
-            imageView.hidden = true
+            imageView.isHidden = true
         }
     }
 
@@ -46,7 +46,7 @@ class DetailViewController: UIViewController {
         } else {
             
             if let currentImageDownloader = gCurrentImageDownloader {
-                let url = NSURL(string: (currentImageDownloader.dict!["url_m"] as! String))
+                let url = URL(string: (currentImageDownloader.dict!["url_m"] as! String))
               
                 currentImageDownloader.downloadImageAtURL(url!, completion: {(image, error) in
                     if let myError = error {

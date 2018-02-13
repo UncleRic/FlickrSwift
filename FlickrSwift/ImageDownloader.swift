@@ -23,22 +23,22 @@ class ImageDownloader {
         return myString
     }
     
-    func downloadImageAtURL(url:NSURL, completion:(image:UIImage?, error:NSError?) ->Void) {
+    func downloadImageAtURL(_ url:URL, completion:@escaping (_ image:UIImage?, _ error:NSError?) ->Void) {
         
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data, response, error) in
-            if let httpRes = response as? NSHTTPURLResponse {
+        let task = URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) in
+            if let httpRes = response as? HTTPURLResponse {
                 if httpRes.statusCode == 200 {
                     let myImage = UIImage(data:data!)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        completion(image:myImage,error:nil)
+                    DispatchQueue.main.async(execute: {
+                        completion(myImage,nil)
                     })
                     
                 } else {
-                    completion(image:nil,error:error)
+                    completion(nil,error as! NSError)
                 }
                 
             }
-        }
+        }) 
         
         task.resume()
     }

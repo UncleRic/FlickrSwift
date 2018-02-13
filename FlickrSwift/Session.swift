@@ -8,8 +8,8 @@
 import Foundation
 
 public enum FKHttpMethod:Int {
-    case FKHttpMethodGET = 0
-    case FKHttpMethodPOST
+    case fkHttpMethodGET = 0
+    case fkHttpMethodPOST
 }
 
 //public enum FKPermission:Int {
@@ -29,43 +29,43 @@ public enum FKHttpMethod:Int {
 //}
 
 public enum FKPhotoSize:Int {
-    case FKPhotoSizeUnknown = 0
-    case FKPhotoSizeCollectionIconLarge
-    case FKPhotoSizeBuddyIcon
-    case FKPhotoSizeSmallSquare75
-    case FKPhotoSizeLargeSquare150
-    case FKPhotoSizeThumbnail100
-    case FKPhotoSizeSmall240
-    case FKPhotoSizeSmall320
-    case FKPhotoSizeMedium500
-    case FKPhotoSizeMedium640
-    case FKPhotoSizeMedium800
-    case FKPhotoSizeLarge1024
-    case FKPhotoSizeLarge1600
-    case FKPhotoSizeLarge2048
-    case FKPhotoSizeOriginal
-    case FKPhotoSizeVideoOriginal
-    case FKPhotoSizeVideoHDMP4
-    case FKPhotoSizeVideoSiteMP4
-    case FKPhotoSizeVideoMobileMP4
-    case FKPhotoSizeVideoPlayer
+    case fkPhotoSizeUnknown = 0
+    case fkPhotoSizeCollectionIconLarge
+    case fkPhotoSizeBuddyIcon
+    case fkPhotoSizeSmallSquare75
+    case fkPhotoSizeLargeSquare150
+    case fkPhotoSizeThumbnail100
+    case fkPhotoSizeSmall240
+    case fkPhotoSizeSmall320
+    case fkPhotoSizeMedium500
+    case fkPhotoSizeMedium640
+    case fkPhotoSizeMedium800
+    case fkPhotoSizeLarge1024
+    case fkPhotoSizeLarge1600
+    case fkPhotoSizeLarge2048
+    case fkPhotoSizeOriginal
+    case fkPhotoSizeVideoOriginal
+    case fkPhotoSizeVideoHDMP4
+    case fkPhotoSizeVideoSiteMP4
+    case fkPhotoSizeVideoMobileMP4
+    case fkPhotoSizeVideoPlayer
 }
 
 // -----------------------------------------------------------------------------------------------------
 // MARK:- URL Encryption
 
-public func oauthURLFromBaseURL(inURL:NSURL, method:FKHttpMethod, params:[String:String]) -> NSURL {
+public func oauthURLFromBaseURL(_ inURL:URL, method:FKHttpMethod, params:[String:String]) -> URL {
     let newArgs:Dictionary = signedOAuthHTTPQueryParameters(params, baseURL: inURL, method: method)
     var queryArray = NSMutableArray()
     for (key,value) in newArgs {
         let y = FKEscapedURLStringPlus(value)
-        queryArray.addObject("\(key)=\(y)")
+        queryArray.add("\(key)=\(y)")
     }
     
     let x = "hello";let y = "world"
     let newURLStringWithQuery = "\(x)?\(y)"
     
-    let urlString = NSURL(string: newURLStringWithQuery)
+    let urlString = URL(string: newURLStringWithQuery)
     return inURL
     
 //    NSDictionary *newArgs = [self signedOAuthHTTPQueryParameters:params baseURL:inURL method:method];
@@ -81,7 +81,7 @@ public func oauthURLFromBaseURL(inURL:NSURL, method:FKHttpMethod, params:[String
 
 }
 
-private func signedOAuthHTTPQueryParameters(params:[String:String], baseURL:NSURL, method:FKHttpMethod) -> [String:String] {
+private func signedOAuthHTTPQueryParameters(_ params:[String:String], baseURL:URL, method:FKHttpMethod) -> [String:String] {
     let x = ["Hello":"World"]
     return x
 }
@@ -91,7 +91,7 @@ private func signedOAuthHTTPQueryParameters(params:[String:String], baseURL:NSUR
 // -----------------------------------------------------------------------------------------------------
 // MARK: - Create query string from args and sign it
 
-func signedQueryStringFromParameters(params:[String:String]) -> String {
+func signedQueryStringFromParameters(_ params:[String:String]) -> String {
     let x = "hello"
     return x
 }
@@ -99,7 +99,7 @@ func signedQueryStringFromParameters(params:[String:String]) -> String {
 // -----------------------------------------------------------------------------------------------------
 // MARK: - Args as array
 
-func signedArgsFromParameters(params:[String:String], method:FKHttpMethod, url:NSURL) -> [String:String] {
+func signedArgsFromParameters(_ params:[String:String], method:FKHttpMethod, url:URL) -> [String:String] {
     let x = ["key":"value"]
     return x
 }
@@ -109,23 +109,23 @@ func signedArgsFromParameters(params:[String:String], method:FKHttpMethod, url:N
 // -----------------------------------------------------------------------------------------------------
 // MARK: -
 // (1)...counterpart to (2) ref-to-func() "callback"
-func fetchResponseForRequest(url:NSURL, completion:(statusCode:Int?, string:String?, error:NSError?) ->Void) {
+func fetchResponseForRequest(_ url:URL, completion:@escaping (_ statusCode:Int?, _ string:String?, _ error:NSError?) ->Void) {
     
-    let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data, response, error) in
-        if let httpRes = response as? NSHTTPURLResponse {
+    let task = URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) in
+        if let httpRes = response as? HTTPURLResponse {
             if httpRes.statusCode == 200 {
-                let result = NSString(data: data!, encoding: NSUTF8StringEncoding) as String?
-                dispatch_async(dispatch_get_main_queue(), {
-                    completion(statusCode: httpRes.statusCode, string:result, error: nil)
+                let result = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as String?
+                DispatchQueue.main.async(execute: {
+                    completion(httpRes.statusCode, result, nil)
                 })
             } else {
                 let statusCode = "Status Code: \(httpRes.statusCode)"
-                completion(statusCode:httpRes.statusCode, string:statusCode,error:error)
+                completion(httpRes.statusCode, statusCode,error as! NSError)
             }
         } else {
-            completion(statusCode:nil, string:"*** session Errror ***",error:error)
+            completion(nil, "*** session Errror ***",error as! NSError)
         }
-    }
+    }) 
     
     task.resume()
     

@@ -9,29 +9,29 @@ import Foundation
 
 // MARK: - URL Escaped Strings
 
-public func FKEscapedURLString(string:NSString) -> String {
-    string.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+public func FKEscapedURLString(_ string:NSString) -> String {
+    string.addingPercentEscapes(using: String.Encoding.utf8.rawValue)
     return string as String
 }
 
 // -----------------------------------------------------------------------------------------------------
 
-public func FKEscapedURLStringPlus(string:String) -> String {
+public func FKEscapedURLStringPlus(_ string:String) -> String {
     let str = CFURLCreateStringByAddingPercentEscapes(
         nil,
-        string,
+        string as CFString,
         nil,
-        "`~!@#$^&*()=+[]\\{}|;':\",/<>?",
+        "`~!@#$^&*()=+[]\\{}|;':\",/<>?" as CFString,
         CFStringBuiltInEncodings.UTF8.rawValue
     )
-    return str as String
+    return str as! String
 }
 
 // -----------------------------------------------------------------------------------------------------
 // MARK: - Unique ID
 
 func FKGenerateUUID() -> String {
-    let uuidString = NSUUID().UUIDString
+    let uuidString = UUID().uuidString
     return uuidString
 }
 
@@ -39,10 +39,10 @@ func FKGenerateUUID() -> String {
 // -----------------------------------------------------------------------------------------------------
 // MARK: - OAuthExtraction
 
-public func FKQueryParamDictionaryFromURL(url:NSURL) -> [String:String]? {
+public func FKQueryParamDictionaryFromURL(_ url:URL) -> [String:String]? {
     let x:String? = url.query
     if let urlString = x {
-        let params = FKQueryParamDictionaryFromQueryString(urlString)
+        let params = FKQueryParamDictionaryFromQueryString(urlString as NSString)
     } else {
         return nil
     }
@@ -53,12 +53,12 @@ public func FKQueryParamDictionaryFromURL(url:NSURL) -> [String:String]? {
 
 // -----------------------------------------------------------------------------------------------------
 
-func FKQueryParamDictionaryFromQueryString(queryString:NSString) -> NSDictionary {
-    let vars = queryString.componentsSeparatedByString("&") as [String]
+func FKQueryParamDictionaryFromQueryString(_ queryString:NSString) -> NSDictionary {
+    let vars = queryString.components(separatedBy: "&") as [String]
     print("vars= \(vars)")
     let keyValues = NSMutableDictionary()
     for (val) in vars {
-        let kv = val.componentsSeparatedByString("=")
+        let kv = val.components(separatedBy: "=")
         if (kv.count == 2) {
             keyValues[kv[0]] = kv[1]
         }

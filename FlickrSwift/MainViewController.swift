@@ -20,11 +20,11 @@ class MainViewController: UIViewController {
         fetchFlickrPhotoWithSearchString("Ric");
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Flickr Viewer"
         if nil != gCurrentImageDownloader {
-            gDownloaders.replaceObjectAtIndex(gSelectedItemIndex, withObject: gCurrentImageDownloader!)
+            gDownloaders.replaceObject(at: gSelectedItemIndex, with: gCurrentImageDownloader!)
         }
     }
     
@@ -32,33 +32,35 @@ class MainViewController: UIViewController {
     // MARK: - NSURLSesson
     
     
-    func fetchFlickrPhotoWithSearchString(searchString:String) {
+    func fetchFlickrPhotoWithSearchString(_ searchString:String) {
         
-        let url = getURLForString("Ric")
+        guard let url = getURLForString("Ric") else {
+            return
+        }
         
         var photoData:Array<Dictionary<String,AnyObject>>?
         
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) {(data:NSData?, response: NSURLResponse?, error:NSError?) in
-            if let httpRes = response as? NSHTTPURLResponse {
+        let task = URLSession.shared.dataTask(with: url, completionHandler: {(data:Data?, response: URLResponse?, error:NSError?) in
+            if let httpRes = response as? HTTPURLResponse {
                 if httpRes.statusCode == 200 {
                     let string = stringByRemovingFlickrJavaScriptFromData(data!)
-                    let myData = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+                    let myData = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
                     
                     do {
-                        let JSONDict: NSDictionary = try  NSJSONSerialization.JSONObjectWithData(myData!, options: .AllowFragments) as! NSDictionary
+                        let JSONDict: NSDictionary = try  JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary
+//                        
+//                        let photos: AnyObject? = JSONDict["photos"]
+//                        
+//                        photoData = (photos!["photo"] as! Array<Dictionary<String,AnyObject>>)
+//                        
+//                        let myCount = (photoData!.count - 1)
+//                        
+//                        for index in 0...myCount {
+//                            let downloader:ImageDownloader = ImageDownloader(dict: photoData![index])
+//                            gDownloaders.add(downloader)
+//                        }
                         
-                        let photos: AnyObject? = JSONDict["photos"]
-                        
-                        photoData = (photos!["photo"] as! Array<Dictionary<String,AnyObject>>)
-                        
-                        let myCount = (photoData!.count - 1)
-                        
-                        for index in 0...myCount {
-                            let downloader:ImageDownloader = ImageDownloader(dict: photoData![index])
-                            gDownloaders.addObject(downloader)
-                        }
-                        
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             self.collectionView.reloadData();
                         })
                     } catch _ {
@@ -66,20 +68,20 @@ class MainViewController: UIViewController {
                     }
                     
                 } else {
-                    let controller = UIAlertController(title: "Service Not Found", message: "Code: \(httpRes.statusCode)\n Check your URL value.", preferredStyle: .Alert)
-                    let myAlertAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+                    let controller = UIAlertController(title: "Service Not Found", message: "Code: \(httpRes.statusCode)\n Check your URL value.", preferredStyle: .alert)
+                    let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
                     controller.addAction(myAlertAction)
-                    self.presentViewController(controller, animated:true, completion:nil)
+                    self.present(controller, animated:true, completion:nil)
                     return;
                 }
             } else {
-                let controller = UIAlertController(title: "No Wi-Fi", message: "Wi-Fi needs to be restored before continuing.", preferredStyle: .Alert)
-                let myAlertAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+                let controller = UIAlertController(title: "No Wi-Fi", message: "Wi-Fi needs to be restored before continuing.", preferredStyle: .alert)
+                let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
                 controller.addAction(myAlertAction)
-                self.presentViewController(controller, animated:true, completion:nil)
+                self.present(controller, animated:true, completion:nil)
                 return;
             }
-        }
+            } as! (Data?, URLResponse?, Error?) -> Void)
         
         task.resume()
         
@@ -88,7 +90,9 @@ class MainViewController: UIViewController {
     // -----------------------------------------------------------------------------------------------------
     
     func doSomething() {
-        let requestTokenURL = getRequestTokenURL()   // 1.
+        guard let requestTokenURL = getRequestTokenURL() else {
+            return
+        }
         
         // (2)...counterpart to (1) func() "complReturn"
         fetchResponseForRequest(requestTokenURL, completion: {(statusCode:Int?, response:String?, error:NSError?) in
@@ -97,10 +101,10 @@ class MainViewController: UIViewController {
             } else {
                 if let myStatusCode = statusCode {
                     if myStatusCode != 200 {
-                        let controller = UIAlertController(title: "Unable to Generate Request Token", message: "Code: \(myStatusCode)\n Check your URL value.", preferredStyle: .Alert)
-                        let myAlertAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+                        let controller = UIAlertController(title: "Unable to Generate Request Token", message: "Code: \(myStatusCode)\n Check your URL value.", preferredStyle: .alert)
+                        let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
                         controller.addAction(myAlertAction)
-                        self.presentViewController(controller, animated:true, completion:nil)
+                        self.present(controller, animated:true, completion:nil)
                         return;
                     } else {
                         // do Something with data.
@@ -114,16 +118,16 @@ class MainViewController: UIViewController {
     // MARK: - Action Methods
     
     
-    @IBAction func doSomethingAction(sender: UIButton) {
+    @IBAction func doSomethingAction(_ sender: UIButton) {
         
         let myFlickr = FlickrKit(apiKey: "Turkey", sharedSecret: "Turkey is great with Cranberry Sauce")
-        let me = FKPermission.FKPermissionRead
+        let me = FKPermission.fkPermissionRead
         let url = myFlickr.userAuthorizationURLWithRequestToken("http://www.apple.com",requestedPermission: me)
         
         print("Hello from ViewController:\(url)")
     }
     
-    @IBAction func exitAction(sender: AnyObject) {
+    @IBAction func exitAction(_ sender: AnyObject) {
         exit(0)
     }
     
@@ -136,14 +140,14 @@ extension MainViewController: UICollectionViewDataSource {
     
     // -----------------------------------------------------------------------------------------------------
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return gDownloaders.count
     }
     
     // -----------------------------------------------------------------------------------------------------
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell: AnyObject = collectionView.dequeueReusableCellWithReuseIdentifier("photoCell", forIndexPath:indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: AnyObject = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for:indexPath)
         let photoImageView = cell.viewWithTag!(1) as! UIImageView
         
         let selectedItemIndex = indexPath.item as Int
@@ -154,7 +158,7 @@ extension MainViewController: UICollectionViewDataSource {
         } else {
             var myDict = currentImageDownloader.dict!
             let urlString:String = myDict["url_sq"]! as! String
-            let url = NSURL(string:urlString)
+            let url = URL(string:urlString)
             
             currentImageDownloader.downloadImageAtURL(url!, completion: {(image:UIImage?, error:NSError?) in
                 if let myImage = image {
@@ -171,11 +175,11 @@ extension MainViewController: UICollectionViewDataSource {
 // -----------------------------------------------------------------------------------------------------
 
 extension MainViewController {
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems() as [NSIndexPath]?
+            let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems as [IndexPath]?
             gSelectedItemIndex = selectedIndexPaths![0].item
-            gCurrentImageDownloader = gDownloaders.objectAtIndex(gSelectedItemIndex) as? ImageDownloader
+            gCurrentImageDownloader = gDownloaders.object(at: gSelectedItemIndex) as? ImageDownloader
         }
     }
 }

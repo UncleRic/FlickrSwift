@@ -10,16 +10,16 @@ import Foundation
 var gPermission:FKPermission?
 
 public enum FKPermission:Int {
-    case FKPermissionRead
-    case FKPermissionWrite
-    case FKPermissionDelete
+    case fkPermissionRead
+    case fkPermissionWrite
+    case fkPermissionDelete
     func description() ->String {
         switch self {
-        case .FKPermissionRead:
+        case .fkPermissionRead:
             return "READ"
-        case .FKPermissionWrite:
+        case .fkPermissionWrite:
             return "WRITE"
-        case .FKPermissionDelete:
+        case .fkPermissionDelete:
             return "DELETE"
         }
     }
@@ -39,10 +39,10 @@ class FlickrKit:NSObject {
 // =======================================================================================================================
 
 extension FlickrKit {
-    func userAuthorizationURLWithRequestToken(inRequestToken:NSString!, requestedPermission:FKPermission) -> NSURL {
+    func userAuthorizationURLWithRequestToken(_ inRequestToken:NSString!, requestedPermission:FKPermission) -> URL {
         gPermission = requestedPermission
         let perms = "&perms=\(requestedPermission.description())"
         let urlString = "http://www.flickr.com/services/oauth/authorize?oauth_token=\(inRequestToken)\(perms)" as NSString
-        return NSURL(string: urlString as String)!
+        return URL(string: urlString as String)!
     }
 }
