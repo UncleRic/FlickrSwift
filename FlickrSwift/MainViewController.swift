@@ -8,10 +8,11 @@
 import UIKit
 
 var gDownloaders:NSMutableArray = NSMutableArray()
-var gCurrentImageDownloader:ImageDownloader?
+var gCurrentImageDownloader:ImageDownloadItem?
 var gSelectedItemIndex:Int = 0
 
 class MainViewController: UIViewController {
+    var photos:PhotoStuff?
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -33,69 +34,37 @@ class MainViewController: UIViewController {
     
     
     func fetchFlickrPhotoWithSearchString(_ searchString:String) {
-        
         guard let url = getURLForString("Ric") else {
             return
         }
         
-        
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             if nil == error, let data = data {
-                self.disseminateJSON(data: data)
+                self.dessiminateData(photoItems: self.disseminateJSON(data: data)?.photo)
+                
+                DispatchQueue.main.async(execute: {
+                    self.collectionView.reloadData()
+                })
+            } else {
+                let controller = UIAlertController(title: "No Wi-Fi", message: "Wi-Fi needs to be restored before continuing.", preferredStyle: .alert)
+                let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+                controller.addAction(myAlertAction)
+                self.present(controller, animated:true, completion:nil)
+                return;
             }
         }
-        
         task.resume()
-        
-        
-//        let task = URLSession.shared.dataTask(with: url, completionHandler: {(data:Data?, response: URLResponse?, error:NSError?) in
-//
-//           // if let httpRes = response as? HTTPURLResponse {
-//                //                if httpRes.statusCode == 200 {
-//                //                    let string = stringByRemovingFlickrJavaScriptFromData(data!)
-//                //                    let myData = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
-//                //
-//                //                    do {
-//                //                        let JSONDict: NSDictionary = try  JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary
-//                ////
-//                ////                        let photos: AnyObject? = JSONDict["photos"]
-//                ////
-//                ////                        photoData = (photos!["photo"] as! Array<Dictionary<String,AnyObject>>)
-//                ////
-//                ////                        let myCount = (photoData!.count - 1)
-//                ////
-//                ////                        for index in 0...myCount {
-//                ////                            let downloader:ImageDownloader = ImageDownloader(dict: photoData![index])
-//                ////                            gDownloaders.add(downloader)
-//                ////                        }
-//                //
-//                //                        DispatchQueue.main.async(execute: {
-//                //                            self.collectionView.reloadData();
-//                //                        })
-//                //                    } catch _ {
-//                //
-//                //                    }
-//                //
-//                //                } else {
-//                //                    let controller = UIAlertController(title: "Service Not Found", message: "Code: \(httpRes.statusCode)\n Check your URL value.", preferredStyle: .alert)
-//                //                    let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
-//                //                    controller.addAction(myAlertAction)
-//                //                    self.present(controller, animated:true, completion:nil)
-//                //                    return;
-//                //                }
-////            } else {
-////                let controller = UIAlertController(title: "No Wi-Fi", message: "Wi-Fi needs to be restored before continuing.", preferredStyle: .alert)
-////                let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
-////                controller.addAction(myAlertAction)
-////                self.present(controller, animated:true, completion:nil)
-////                return;
-////            }
-//            } as! (Data?, URLResponse?, Error?) -> Void)
-        
-        task.resume()
-        
     }
     
+    // -----------------------------------------------------------------------------------------------------
+    
+    func dessiminateData(photoItems: [PhotoInfo]? = nil) {
+        guard let photoItems = photoItems else {
+            return
+        }
+        
+        return
+    }
     // -----------------------------------------------------------------------------------------------------
     
     func doSomething() {
@@ -104,8 +73,8 @@ class MainViewController: UIViewController {
         }
         
         // (2)...counterpart to (1) func() "complReturn"
-        fetchResponseForRequest(requestTokenURL, completion: {(statusCode:Int?, response:String?, error:NSError?) in
-            if let myError = error {
+        fetchResponseForRequest(requestTokenURL, completion: {(statusCode:Int?, _, error:NSError?) in
+            if let error = error {
                 print(error)
             } else {
                 if let myStatusCode = statusCode {
@@ -150,7 +119,10 @@ extension MainViewController: UICollectionViewDataSource {
     // -----------------------------------------------------------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gDownloaders.count
+        if let photos = self.photos?.photo {
+            return photos.count
+        }
+        return 0
     }
     
     // -----------------------------------------------------------------------------------------------------
@@ -159,8 +131,11 @@ extension MainViewController: UICollectionViewDataSource {
         let cell: AnyObject = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for:indexPath)
         let photoImageView = cell.viewWithTag!(1) as! UIImageView
         
-        let selectedItemIndex = indexPath.item as Int
-        let currentImageDownloader:ImageDownloader = gDownloaders[selectedItemIndex] as! ImageDownloader
+        let photoItem = self.photos?.photo[indexPath.item]
+        let url = URL(string:photoItem!.url_sq)
+        
+        
+        let currentImageDownloader:ImageDownloadItem = gDownloaders[indexPath.item] as! ImageDownloadItem
         
         if let image:UIImage = currentImageDownloader.image {
             photoImageView.image = image
@@ -168,7 +143,7 @@ extension MainViewController: UICollectionViewDataSource {
             var myDict = currentImageDownloader.dict!
             let urlString:String = myDict["url_sq"]! as! String
             let url = URL(string:urlString)
-            
+
             currentImageDownloader.downloadImageAtURL(url!, completion: {(image:UIImage?, error:NSError?) in
                 if let myImage = image {
                     photoImageView.image = myImage
@@ -188,7 +163,7 @@ extension MainViewController {
         if segue.identifier == "showDetail" {
             let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems as [IndexPath]?
             gSelectedItemIndex = selectedIndexPaths![0].item
-            gCurrentImageDownloader = gDownloaders.object(at: gSelectedItemIndex) as? ImageDownloader
+            gCurrentImageDownloader = gDownloaders.object(at: gSelectedItemIndex) as? ImageDownloadItem
         }
     }
 }

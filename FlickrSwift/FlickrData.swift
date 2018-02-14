@@ -65,11 +65,14 @@ extension MainViewController {
         return dataString.data(using: .utf8)
     }
     
-    func disseminateJSON(data: Data)  {
+    // -----------------------------------------------------------------------------------------------------
+    
+    func disseminateJSON(data: Data) -> PhotoStuff? {
+        var photos:PhotoStuff?
         do {
             if let cleanData = cleanData(data: data) {
-                let flickrDaga = try JSONDecoder().decode(PhotoListModel.self, from: cleanData)
-                print(flickrDaga)
+                let flickrData = try JSONDecoder().decode(PhotoListModel.self, from: cleanData)
+                photos = flickrData.photos
             }
             
         } catch let error as NSError {
@@ -78,6 +81,34 @@ extension MainViewController {
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
-        return
+        return photos
     }
+    
+    // -----------------------------------------------------------------------------------------------------
+    
+    func downloadImageAtURL(_ url:URL, completion:@escaping (_ image:UIImage?, _ error:NSError?) ->Void) {
+        
+        let task = URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) in
+            if let httpRes = response as? HTTPURLResponse {
+                if httpRes.statusCode == 200 {
+                    let myImage = UIImage(data:data!)
+                    DispatchQueue.main.async(execute: {
+                        completion(myImage,nil)
+                    })
+                    
+                }
+                
+            }
+        })
+        
+        task.resume()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }

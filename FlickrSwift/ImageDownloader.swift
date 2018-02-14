@@ -1,4 +1,4 @@
-//  ImageDownloader.swift
+//  ImageDownloadItem.swift
 //  FlickrSwift
 //
 //  Created by Frederick C. Lee on 10/1/14.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ImageDownloader {
+class ImageDownloadItem {
     var image:UIImage?
     var bigImage:UIImage?
     var dict:Dictionary<String,AnyObject>?
@@ -19,7 +19,7 @@ class ImageDownloader {
     }
     
     func debugDescription() -> NSString {
-        let myString = NSString(format:"{ImageDownloader} desc: %@", descString!)
+        let myString = NSString(format:"{ImageDownloadItem} desc: %@", descString!)
         return myString
     }
     
