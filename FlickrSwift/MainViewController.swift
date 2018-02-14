@@ -38,50 +38,59 @@ class MainViewController: UIViewController {
             return
         }
         
-        var photoData:Array<Dictionary<String,AnyObject>>?
         
-        let task = URLSession.shared.dataTask(with: url, completionHandler: {(data:Data?, response: URLResponse?, error:NSError?) in
-            if let httpRes = response as? HTTPURLResponse {
-                if httpRes.statusCode == 200 {
-                    let string = stringByRemovingFlickrJavaScriptFromData(data!)
-                    let myData = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
-                    
-                    do {
-                        let JSONDict: NSDictionary = try  JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary
-//                        
-//                        let photos: AnyObject? = JSONDict["photos"]
-//                        
-//                        photoData = (photos!["photo"] as! Array<Dictionary<String,AnyObject>>)
-//                        
-//                        let myCount = (photoData!.count - 1)
-//                        
-//                        for index in 0...myCount {
-//                            let downloader:ImageDownloader = ImageDownloader(dict: photoData![index])
-//                            gDownloaders.add(downloader)
-//                        }
-                        
-                        DispatchQueue.main.async(execute: {
-                            self.collectionView.reloadData();
-                        })
-                    } catch _ {
-                        
-                    }
-                    
-                } else {
-                    let controller = UIAlertController(title: "Service Not Found", message: "Code: \(httpRes.statusCode)\n Check your URL value.", preferredStyle: .alert)
-                    let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
-                    controller.addAction(myAlertAction)
-                    self.present(controller, animated:true, completion:nil)
-                    return;
-                }
-            } else {
-                let controller = UIAlertController(title: "No Wi-Fi", message: "Wi-Fi needs to be restored before continuing.", preferredStyle: .alert)
-                let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
-                controller.addAction(myAlertAction)
-                self.present(controller, animated:true, completion:nil)
-                return;
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            if nil == error, let data = data {
+                self.disseminateJSON(data: data)
             }
-            } as! (Data?, URLResponse?, Error?) -> Void)
+        }
+        
+        task.resume()
+        
+        
+//        let task = URLSession.shared.dataTask(with: url, completionHandler: {(data:Data?, response: URLResponse?, error:NSError?) in
+//
+//           // if let httpRes = response as? HTTPURLResponse {
+//                //                if httpRes.statusCode == 200 {
+//                //                    let string = stringByRemovingFlickrJavaScriptFromData(data!)
+//                //                    let myData = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
+//                //
+//                //                    do {
+//                //                        let JSONDict: NSDictionary = try  JSONSerialization.jsonObject(with: myData!, options: .allowFragments) as! NSDictionary
+//                ////
+//                ////                        let photos: AnyObject? = JSONDict["photos"]
+//                ////
+//                ////                        photoData = (photos!["photo"] as! Array<Dictionary<String,AnyObject>>)
+//                ////
+//                ////                        let myCount = (photoData!.count - 1)
+//                ////
+//                ////                        for index in 0...myCount {
+//                ////                            let downloader:ImageDownloader = ImageDownloader(dict: photoData![index])
+//                ////                            gDownloaders.add(downloader)
+//                ////                        }
+//                //
+//                //                        DispatchQueue.main.async(execute: {
+//                //                            self.collectionView.reloadData();
+//                //                        })
+//                //                    } catch _ {
+//                //
+//                //                    }
+//                //
+//                //                } else {
+//                //                    let controller = UIAlertController(title: "Service Not Found", message: "Code: \(httpRes.statusCode)\n Check your URL value.", preferredStyle: .alert)
+//                //                    let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+//                //                    controller.addAction(myAlertAction)
+//                //                    self.present(controller, animated:true, completion:nil)
+//                //                    return;
+//                //                }
+////            } else {
+////                let controller = UIAlertController(title: "No Wi-Fi", message: "Wi-Fi needs to be restored before continuing.", preferredStyle: .alert)
+////                let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+////                controller.addAction(myAlertAction)
+////                self.present(controller, animated:true, completion:nil)
+////                return;
+////            }
+//            } as! (Data?, URLResponse?, Error?) -> Void)
         
         task.resume()
         
