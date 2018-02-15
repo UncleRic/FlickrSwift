@@ -22,8 +22,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ke8-d6-nqO">
+                                <rect key="frame" x="-1" y="622" width="377" height="44"/>
+                                <items>
+                                    <barButtonItem title="Exit" id="84Y-Ju-rx3">
+                                        <connections>
+                                            <action selector="exitAction:" destination="vXZ-lx-hvc" id="ks5-rb-8Ri"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="226-do-SOk">
-                                <rect key="frame" x="30" y="89" width="315" height="479"/>
+                                <rect key="frame" x="16" y="64" width="343" height="560"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Vb2-wq-vxx">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -39,7 +49,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NWk-Dd-NrO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
@@ -60,35 +70,16 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="eCa-qM-W3g"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LsC-UM-cpF">
-                                <rect key="frame" x="16" y="629" width="98" height="30"/>
-                                <state key="normal" title="Do Something">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="doSomethingAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gwp-PH-nZW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIk-V0-QBN">
-                                <rect key="frame" x="315" y="629" width="30" height="30"/>
-                                <state key="normal" title="Exit">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="exitAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="K5Q-UH-mN3"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.79795017739999996" green="0.93767279579999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="226-do-SOk" firstAttribute="top" secondItem="F5g-Hb-38o" secondAttribute="bottom" constant="25" id="2lQ-On-rst"/>
-                            <constraint firstItem="226-do-SOk" firstAttribute="trailing" secondItem="kIk-V0-QBN" secondAttribute="trailing" id="A9C-Ce-IYO"/>
-                            <constraint firstItem="LsC-UM-cpF" firstAttribute="baseline" secondItem="kIk-V0-QBN" secondAttribute="baseline" id="HMo-vB-MCy"/>
-                            <constraint firstItem="LsC-UM-cpF" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="KLf-gF-8o8"/>
-                            <constraint firstItem="226-do-SOk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="14" id="eht-69-THc"/>
-                            <constraint firstItem="LsC-UM-cpF" firstAttribute="top" secondItem="226-do-SOk" secondAttribute="bottom" constant="61" id="fdc-CJ-766"/>
-                            <constraint firstItem="UPg-z5-7Rn" firstAttribute="top" secondItem="LsC-UM-cpF" secondAttribute="bottom" constant="8" symbolic="YES" id="hcl-e5-eIN"/>
-                            <constraint firstItem="226-do-SOk" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="jaG-1B-h3C"/>
+                            <constraint firstItem="UPg-z5-7Rn" firstAttribute="top" secondItem="226-do-SOk" secondAttribute="bottom" constant="43" id="6KI-ys-d5O"/>
+                            <constraint firstItem="UPg-z5-7Rn" firstAttribute="top" secondItem="ke8-d6-nqO" secondAttribute="bottom" constant="1" id="CiI-vN-x3e"/>
+                            <constraint firstItem="226-do-SOk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="HKj-bl-DHh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="226-do-SOk" secondAttribute="trailing" id="How-5i-pwm"/>
+                            <constraint firstItem="226-do-SOk" firstAttribute="top" secondItem="F5g-Hb-38o" secondAttribute="bottom" id="fMd-Ef-YyW"/>
+                            <constraint firstItem="ke8-d6-nqO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-17" id="ifb-N3-8bD"/>
+                            <constraint firstItem="226-do-SOk" firstAttribute="centerX" secondItem="ke8-d6-nqO" secondAttribute="centerX" id="lOT-GP-9L5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="cIH-xX-U8r"/>
@@ -98,7 +89,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="684" y="307"/>
+            <point key="canvasLocation" x="683.5" y="306.5"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="r72-Tm-dab">

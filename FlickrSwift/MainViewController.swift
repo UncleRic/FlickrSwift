@@ -65,45 +65,9 @@ class MainViewController: UIViewController {
         
         return
     }
-    // -----------------------------------------------------------------------------------------------------
-    
-    func doSomething() {
-        guard let requestTokenURL = getRequestTokenURL() else {
-            return
-        }
-        
-        // (2)...counterpart to (1) func() "complReturn"
-        fetchResponseForRequest(requestTokenURL, completion: {(statusCode:Int?, _, error:NSError?) in
-            if let error = error {
-                print(error)
-            } else {
-                if let myStatusCode = statusCode {
-                    if myStatusCode != 200 {
-                        let controller = UIAlertController(title: "Unable to Generate Request Token", message: "Code: \(myStatusCode)\n Check your URL value.", preferredStyle: .alert)
-                        let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
-                        controller.addAction(myAlertAction)
-                        self.present(controller, animated:true, completion:nil)
-                        return;
-                    } else {
-                        // do Something with data.
-                    }
-                }
-            }
-        }) // ...end completion.
-    }
     
     // =======================================================================================================================
     // MARK: - Action Methods
-    
-    
-    @IBAction func doSomethingAction(_ sender: UIButton) {
-        
-        let myFlickr = FlickrKit(apiKey: "Turkey", sharedSecret: "Turkey is great with Cranberry Sauce")
-        let me = FKPermission.fkPermissionRead
-        let url = myFlickr.userAuthorizationURLWithRequestToken("http://www.apple.com",requestedPermission: me)
-        
-        print("Hello from ViewController:\(url)")
-    }
     
     @IBAction func exitAction(_ sender: AnyObject) {
         exit(0)

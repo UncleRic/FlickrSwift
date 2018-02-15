@@ -32,7 +32,6 @@ class DetailViewController: UIViewController {
             self.imageView.image = bigImage;
         } else {
             let url = URL(string: (downloadItem?.photoInfo?.url_m)!)
-            
             mainViewController?.downloadImageAtURL(url!, completion: {(bigImage, error) in
                 if let myError = error {
                     print(myError)
