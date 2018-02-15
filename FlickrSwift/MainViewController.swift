@@ -45,7 +45,6 @@ class MainViewController: UIViewController {
                 let myAlertAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
                 controller.addAction(myAlertAction)
                 self.present(controller, animated:true, completion:nil)
-                return;
             }
         }
         task.resume()
