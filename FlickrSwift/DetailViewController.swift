@@ -8,54 +8,41 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-    
     @IBOutlet weak var imageView: UIImageView!
+    var mainViewController:MainViewController?
+    var downloadItem:ImageDownloadItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let currentImageDownloader = gCurrentImageDownloader {
-            self.title = (currentImageDownloader.dict!["title"] as! String)
+        if let title = downloadItem?.photoInfo?.title {
+            self.title = title
         } else {
             self.title = "No Title"
         }
+        
         self.imageView.isHidden = false
         displayBigImage()
     }
     
-    // -----------------------------------------------------------------------------------------------------------------------
-    
-    override func willMove(toParentViewController parent: UIViewController?) {
-    
-        if let _ = parent {
-            if let myBigImage  = self.imageView?.image {
-                gCurrentImageDownloader?.bigImage = myBigImage
-            }
-        } else {
-            // Returning to MainViewController
-            imageView.isHidden = true
-        }
-    }
-
-    
     // -----------------------------------------------------------------------------------------------------
     
     func displayBigImage() {
-        if let image = gCurrentImageDownloader!.bigImage {
-            self.imageView.image = image;
+        if let bigImage = downloadItem?.bigImage {
+            self.imageView.image = bigImage;
         } else {
+            let url = URL(string: (downloadItem?.photoInfo?.url_m)!)
             
-            if let currentImageDownloader = gCurrentImageDownloader {
-                let url = URL(string: (currentImageDownloader.dict!["url_m"] as! String))
-              
-                currentImageDownloader.downloadImageAtURL(url!, completion: {(image, error) in
-                    if let myError = error {
-                        print(myError)
-                    } else {
-                        self.imageView.image = image;
-                    }
-                })
-            }
+            mainViewController?.downloadImageAtURL(url!, completion: {(bigImage, error) in
+                if let myError = error {
+                    print(myError)
+                } else {
+                    DispatchQueue.main.async(execute: {
+                        self.downloadItem?.bigImage = bigImage
+                        self.imageView.image = bigImage;
+                    })
+                }
+            })
         }
     }
 }

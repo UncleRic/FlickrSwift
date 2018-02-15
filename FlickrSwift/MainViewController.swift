@@ -7,12 +7,12 @@
 
 import UIKit
 
-var gDownloaders:NSMutableArray = NSMutableArray()
-var gCurrentImageDownloader:ImageDownloadItem?
 var gSelectedItemIndex:Int = 0
 
 class MainViewController: UIViewController {
     var photos:PhotoStuff?
+    var downloadItems = [ImageDownloadItem]()
+    var downloadItem:ImageDownloadItem?
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -24,9 +24,6 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Flickr Viewer"
-        if nil != gCurrentImageDownloader {
-            gDownloaders.replaceObject(at: gSelectedItemIndex, with: gCurrentImageDownloader!)
-        }
     }
     
     // -----------------------------------------------------------------------------------------------------
@@ -41,7 +38,6 @@ class MainViewController: UIViewController {
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             if nil == error, let data = data {
                 self.dessiminateData(photoItems: self.disseminateJSON(data: data)?.photo)
-                
                 DispatchQueue.main.async(execute: {
                     self.collectionView.reloadData()
                 })
@@ -61,6 +57,10 @@ class MainViewController: UIViewController {
     func dessiminateData(photoItems: [PhotoInfo]? = nil) {
         guard let photoItems = photoItems else {
             return
+        }
+        photoItems.forEach { (photoInfo) in
+            let imageDownloadItem = ImageDownloadItem(photoInfo: photoInfo)
+            self.downloadItems.append(imageDownloadItem)
         }
         
         return
@@ -119,10 +119,7 @@ extension MainViewController: UICollectionViewDataSource {
     // -----------------------------------------------------------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let photos = self.photos?.photo {
-            return photos.count
-        }
-        return 0
+        return downloadItems.count
     }
     
     // -----------------------------------------------------------------------------------------------------
@@ -130,21 +127,13 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: AnyObject = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for:indexPath)
         let photoImageView = cell.viewWithTag!(1) as! UIImageView
-        
-        let photoItem = self.photos?.photo[indexPath.item]
-        let url = URL(string:photoItem!.url_sq)
-        
-        
-        let currentImageDownloader:ImageDownloadItem = gDownloaders[indexPath.item] as! ImageDownloadItem
-        
-        if let image:UIImage = currentImageDownloader.image {
-            photoImageView.image = image
-        } else {
-            var myDict = currentImageDownloader.dict!
-            let urlString:String = myDict["url_sq"]! as! String
-            let url = URL(string:urlString)
+        downloadItem = downloadItems[indexPath.item]
 
-            currentImageDownloader.downloadImageAtURL(url!, completion: {(image:UIImage?, error:NSError?) in
+        if let image = downloadItem?.image {
+            photoImageView.image = image
+        } else if let urlSQ = downloadItem?.photoInfo?.url_sq {
+            let url = URL(string:urlSQ)
+            self.downloadImageAtURL(url!, completion: {(image:UIImage?, error:NSError?) in
                 if let myImage = image {
                     photoImageView.image = myImage
                 } else if let myError = error {
@@ -161,9 +150,8 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems as [IndexPath]?
-            gSelectedItemIndex = selectedIndexPaths![0].item
-            gCurrentImageDownloader = gDownloaders.object(at: gSelectedItemIndex) as? ImageDownloadItem
+            let destinationViewController = segue.destination as? DetailViewController
+            destinationViewController?.downloadItem = downloadItem
         }
     }
 }
