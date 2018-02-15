@@ -151,8 +151,7 @@ class OAuth: NSObject {
         
         if (tokenSecret != nil){
             self.SignatureSecret = "\(consumerSecret)&\(tokenSecret!)"
-        }
-        else {
+        } else {
             self.SignatureSecret = "\(consumerSecret)&"
         }
         
@@ -161,12 +160,6 @@ class OAuth: NSObject {
 
 // =======================================================================================================================
 // MARK: - Flickr Methods
-
-public func getRequestTokenURL() -> URL? {
-    return buildFlickrURLWith(flickrRequestToken, parameters: oauthParameters)
-}
-
-// -----------------------------------------------------------------------------------------------------
 
 public func getURLForString(_ str:String) -> URL? {
     let parameters = [flickrParamMethod : flickrMethodSearchPhotos,
@@ -177,19 +170,6 @@ public func getURLForString(_ str:String) -> URL? {
 }
 
 // -----------------------------------------------------------------------------------------------------
-//- (NSURL *)buildFlickrURLWithParameters:(NSDictionary *)parameters {     // 22
-//
-//    NSMutableString *URLString = [[NSMutableString alloc]
-//        initWithString:flickrBaseURL];
-//    for (id key in parameters) {
-//        NSString *value = [parameters objectForKey:key];
-//        [URLString appendFormat:@"%@=%@&", key,
-//         [value stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-//    }
-//    NSURL *url = [NSURL URLWithString:URLString];
-//    return url;
-//}
-
 
 func buildFlickrURLWith(_ baseURL:String, parameters:Dictionary<String,String>) -> URL? {
     var urlString = baseURL
@@ -203,49 +183,5 @@ func buildFlickrURLWith(_ baseURL:String, parameters:Dictionary<String,String>) 
     return nil
 }
 
-// -----------------------------------------------------------------------------------------------------
 
-func stringWithData(_ data:Data) -> String {
-    let result = NSString(data:data, encoding:String.Encoding.utf8.rawValue)
-    return result! as String
-}
-
-// -----------------------------------------------------------------------------------------------------
-
-func stringByRemovingFlickrJavaScriptFromData(_ data:Data) -> String {
-    //    let myRange = NSMakeRange(0, 100)
-    //    let myString = stringWithData(data) as NSString
-    //    let mutableString = NSMutableString(string: myString)
-    //    var range = NSMakeRange(0, "jsonFlickrApi(".count)
-    //    mutableString.deleteCharacters(in: range)
-    //
-    //    // -------------------------------------------------
-    //    // ...every so often, a remaining '(' screws up the JSON parser.  So test again & remove it:
-    //    range = NSMakeRange(0, 1)
-    //    if mutableString.substring(with: range) == "(" {
-    //        mutableString.deleteCharacters(in: range)
-    //    }
-    //
-    //    // -------------------------------------------------
-    //    // ...delete the trailing ')' character
-    //    range = NSMakeRange(mutableString.count - 1,1)
-    //    mutableString.deleteCharacters(in: range)
-    
-    return ""
-    // return mutableString as String
-}
-
-// -----------------------------------------------------------------------------------------------------
-
-func stringByRemovingFlickrJavaScriptFromString(_ str:String) -> String {
-    //    let mutableString = NSMutableString(format: str as NSString)
-    //    var range = NSMakeRange(0, "jsonFlickrApi(".length)
-    //    mutableString.deleteCharacters(in: range)
-    //    range = NSMakeRange(mutableString.length - 1,1)
-    //    mutableString.deleteCharacters(in: range)
-    //    return mutableString as String
-    return ""
-}
-
-// =======================================================================================================================
 
