@@ -29,16 +29,15 @@ class MainViewController: UIViewController {
     // -----------------------------------------------------------------------------------------------------
     // MARK: - NSURLSesson
     
-    
     func fetchFlickrPhotoWithSearchString(_ searchString:String) {
         guard let url = getURLForString("Ric") else {
             return
         }
-        
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             if nil == error, let data = data {
                 self.dessiminateData(photoItems: self.disseminateJSON(data: data)?.photo)
                 DispatchQueue.main.async(execute: {
+                    self.collectionView.isHidden = false
                     self.collectionView.reloadData()
                 })
             } else {
@@ -62,7 +61,6 @@ class MainViewController: UIViewController {
             let imageDownloadItem = ImageDownloadItem(photoInfo: photoInfo)
             self.downloadItems.append(imageDownloadItem)
         }
-        
         return
     }
     
@@ -72,7 +70,6 @@ class MainViewController: UIViewController {
     @IBAction func exitAction(_ sender: AnyObject) {
         exit(0)
     }
-    
 }
 
 // =======================================================================================================================
