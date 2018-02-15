@@ -8,13 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1812B88720337F81004E417C /* FlickrData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1812B88620337F81004E417C /* FlickrData.swift */; };
-		18220E7019EE32CB00684C99 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18220E6F19EE32CB00684C99 /* Utilities.swift */; };
+		1837AAC3203535E20028B838 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1837AAC1203535E20028B838 /* LaunchScreen.xib */; };
 		1878C7A819F0739900011279 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1878C7A719F0739900011279 /* MainViewController.swift */; };
 		18DF4FE919E88CA2007C0EAC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF4FE819E88CA2007C0EAC /* DetailViewController.swift */; };
 		18ECC9BB19DA02E7000BBB78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECC9BA19DA02E7000BBB78 /* AppDelegate.swift */; };
 		18ECC9C019DA02E7000BBB78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18ECC9BE19DA02E7000BBB78 /* Main.storyboard */; };
 		18ECC9C219DA02E7000BBB78 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18ECC9C119DA02E7000BBB78 /* Images.xcassets */; };
-		18ECC9C519DA02E7000BBB78 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18ECC9C319DA02E7000BBB78 /* LaunchScreen.xib */; };
 		18ECC9D119DA02E7000BBB78 /* FlickrSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECC9D019DA02E7000BBB78 /* FlickrSwiftTests.swift */; };
 		18F9FF5519EF19D50005C553 /* FlickrEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F9FF5419EF19D50005C553 /* FlickrEnvironment.swift */; };
 /* End PBXBuildFile section */
@@ -44,7 +43,7 @@
 
 /* Begin PBXFileReference section */
 		1812B88620337F81004E417C /* FlickrData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrData.swift; sourceTree = "<group>"; };
-		18220E6F19EE32CB00684C99 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		1837AAC2203535E20028B838 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1878C7A719F0739900011279 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		18DF4FE819E88CA2007C0EAC /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		18ECC9B519DA02E7000BBB78 /* FlickrSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,7 +51,6 @@
 		18ECC9BA19DA02E7000BBB78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18ECC9BF19DA02E7000BBB78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		18ECC9C119DA02E7000BBB78 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		18ECC9C419DA02E7000BBB78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		18ECC9CA19DA02E7000BBB78 /* FlickrSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlickrSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18ECC9CF19DA02E7000BBB78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18ECC9D019DA02E7000BBB78 /* FlickrSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrSwiftTests.swift; sourceTree = "<group>"; };
@@ -77,6 +75,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1837AAC0203535690028B838 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				18ECC9BE19DA02E7000BBB78 /* Main.storyboard */,
+				1837AAC1203535E20028B838 /* LaunchScreen.xib */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
 		18ECC9AC19DA02E7000BBB78 = {
 			isa = PBXGroup;
 			children = (
@@ -103,10 +110,8 @@
 				18DF4FE819E88CA2007C0EAC /* DetailViewController.swift */,
 				1812B88620337F81004E417C /* FlickrData.swift */,
 				18F9FF5419EF19D50005C553 /* FlickrEnvironment.swift */,
-				18220E6F19EE32CB00684C99 /* Utilities.swift */,
-				18ECC9BE19DA02E7000BBB78 /* Main.storyboard */,
+				1837AAC0203535690028B838 /* Storyboards */,
 				18ECC9C119DA02E7000BBB78 /* Images.xcassets */,
-				18ECC9C319DA02E7000BBB78 /* LaunchScreen.xib */,
 				18ECC9B819DA02E7000BBB78 /* Supporting Files */,
 			);
 			path = FlickrSwift;
@@ -224,7 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18ECC9C019DA02E7000BBB78 /* Main.storyboard in Resources */,
-				18ECC9C519DA02E7000BBB78 /* LaunchScreen.xib in Resources */,
+				1837AAC3203535E20028B838 /* LaunchScreen.xib in Resources */,
 				18ECC9C219DA02E7000BBB78 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,7 +249,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F9FF5519EF19D50005C553 /* FlickrEnvironment.swift in Sources */,
-				18220E7019EE32CB00684C99 /* Utilities.swift in Sources */,
 				18DF4FE919E88CA2007C0EAC /* DetailViewController.swift in Sources */,
 				1812B88720337F81004E417C /* FlickrData.swift in Sources */,
 				18ECC9BB19DA02E7000BBB78 /* AppDelegate.swift in Sources */,
@@ -271,20 +275,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		1837AAC1203535E20028B838 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1837AAC2203535E20028B838 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
 		18ECC9BE19DA02E7000BBB78 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				18ECC9BF19DA02E7000BBB78 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		18ECC9C319DA02E7000BBB78 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				18ECC9C419DA02E7000BBB78 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -328,7 +332,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -367,7 +371,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
