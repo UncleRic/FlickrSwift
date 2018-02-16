@@ -198,7 +198,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Download" width="16" height="16"/>
-        <image name="Open_in_flickr" width="16" height="16"/>
+        <image name="Download" width="25" height="29"/>
+        <image name="Open_in_flickr" width="40" height="39"/>
     </resources>
 </document>
