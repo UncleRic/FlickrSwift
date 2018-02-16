@@ -71,8 +71,9 @@
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="BT7-XE-mHo"/>
-                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="eCa-qM-W3g"/>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="luf-qa-rwq"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="MwR-UX-9GJ"/>
+                                    <outlet property="prefetchDataSource" destination="vXZ-lx-hvc" id="Ff2-yn-Tah"/>
                                 </connections>
                             </collectionView>
                         </subviews>
@@ -89,7 +90,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="cIH-xX-U8r"/>
                     <connections>
-                        <outlet property="collectionView" destination="226-do-SOk" id="Q1P-5p-Dt2"/>
+                        <outlet property="collectionView" destination="226-do-SOk" id="6wk-Jz-Lzp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

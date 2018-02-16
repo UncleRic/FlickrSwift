@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
     // MARK: - NSURLSesson
     
     
-    func fetchFlickrPhoto(_ searchString:String, tags:String) {
+    private func fetchFlickrPhoto(_ searchString:String, tags:String) {
         guard let url = getURLForString(searchString, tags: tags) else {
             return
         }
@@ -55,7 +55,7 @@ class MainViewController: UIViewController {
     
     // -----------------------------------------------------------------------------------------------------
     
-    func dessiminateData(photoItems: [PhotoInfo]? = nil) {
+    private func dessiminateData(photoItems: [PhotoInfo]? = nil) {
         guard let photoItems = photoItems else {
             return
         }

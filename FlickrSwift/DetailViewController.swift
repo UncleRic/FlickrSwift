@@ -37,7 +37,7 @@ class DetailViewController: UIViewController {
     
     // -----------------------------------------------------------------------------------------------------
     
-    func displayBigImage(sender: MainViewController) {
+    private func displayBigImage(sender: MainViewController) {
         
         if let bigImage = downloadItems![sender.itemID].bigImage {
             self.imageView.image = bigImage;
@@ -57,16 +57,25 @@ class DetailViewController: UIViewController {
     }
     
     // -----------------------------------------------------------------------------------------------------
+    
+    private func displayAlert() {
+        let alert = UIAlertController.init(title: "Sorry, Not Available.", message: nil, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(alertAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // -----------------------------------------------------------------------------------------------------
     // Action methods
     
     @IBAction func openInAppAction(_ sender: UIButton) {
-        print("open in app")
+        displayAlert()
     }
     
     // -----------------------------------------------------------------------------------------------------
     
     @IBAction func downloadAction(_ sender: UIButton) {
-        print("download")
+        savePhoto()
     }
 }
 

@@ -76,7 +76,7 @@ struct ImageDownloadItem {
 
 extension MainViewController {
     
-    func cleanData(data: Data) -> Data? {
+    private func cleanData(data: Data) -> Data? {
         var dataString:String = (NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String?)!
         
         if !dataString.isEmpty {
