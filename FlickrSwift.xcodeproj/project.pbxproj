@@ -10,6 +10,7 @@
 		1812B88720337F81004E417C /* FlickrData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1812B88620337F81004E417C /* FlickrData.swift */; };
 		1837AAC3203535E20028B838 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1837AAC1203535E20028B838 /* LaunchScreen.xib */; };
 		1878C7A819F0739900011279 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1878C7A719F0739900011279 /* MainViewController.swift */; };
+		18DF251720379804003ACF6E /* PhotoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF251620379804003ACF6E /* PhotoStorage.swift */; };
 		18DF4FE919E88CA2007C0EAC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF4FE819E88CA2007C0EAC /* DetailViewController.swift */; };
 		18ECC9BB19DA02E7000BBB78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECC9BA19DA02E7000BBB78 /* AppDelegate.swift */; };
 		18ECC9C019DA02E7000BBB78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18ECC9BE19DA02E7000BBB78 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 		1812B88620337F81004E417C /* FlickrData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrData.swift; sourceTree = "<group>"; };
 		1837AAC2203535E20028B838 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1878C7A719F0739900011279 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		18DF251620379804003ACF6E /* PhotoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStorage.swift; sourceTree = "<group>"; };
 		18DF4FE819E88CA2007C0EAC /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		18ECC9B519DA02E7000BBB78 /* FlickrSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18ECC9B919DA02E7000BBB78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				18ECC9BA19DA02E7000BBB78 /* AppDelegate.swift */,
 				1878C7A719F0739900011279 /* MainViewController.swift */,
 				18DF4FE819E88CA2007C0EAC /* DetailViewController.swift */,
+				18DF251620379804003ACF6E /* PhotoStorage.swift */,
 				1812B88620337F81004E417C /* FlickrData.swift */,
 				18F9FF5419EF19D50005C553 /* FlickrEnvironment.swift */,
 				1837AAC0203535690028B838 /* Storyboards */,
@@ -197,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18DF251720379804003ACF6E /* PhotoStorage.swift in Sources */,
 				18F9FF5519EF19D50005C553 /* FlickrEnvironment.swift in Sources */,
 				18DF4FE919E88CA2007C0EAC /* DetailViewController.swift in Sources */,
 				1812B88720337F81004E417C /* FlickrData.swift in Sources */,

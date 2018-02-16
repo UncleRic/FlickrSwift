@@ -172,6 +172,7 @@
                     <navigationItem key="navigationItem" id="w2g-KJ-IL3"/>
                     <connections>
                         <outlet property="imageView" destination="nnK-Nb-5xa" id="Myj-zX-VZJ"/>
+                        <outlet property="statusLabel" destination="lNS-sx-GVI" id="pcC-Wa-o18"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TLp-Bn-cOo" userLabel="First Responder" sceneMemberID="firstResponder"/>

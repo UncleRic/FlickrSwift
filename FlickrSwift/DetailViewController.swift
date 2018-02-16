@@ -6,9 +6,12 @@
 // -----------------------------------------------------------------------------------------------------
 
 import UIKit
+import Photos
 
 class DetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var statusLabel: UILabel!
+    
     var mainViewController:MainViewController?
     var downloadItems:[ImageDownloadItem]?
     
@@ -26,6 +29,10 @@ class DetailViewController: UIViewController {
         
         self.imageView.isHidden = false
         displayBigImage(sender: sender)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.statusLabel.isHidden = true;
     }
     
     // -----------------------------------------------------------------------------------------------------
@@ -53,11 +60,13 @@ class DetailViewController: UIViewController {
     // Action methods
     
     @IBAction func openInAppAction(_ sender: UIButton) {
+        print("open in app")
     }
     
     // -----------------------------------------------------------------------------------------------------
     
     @IBAction func downloadAction(_ sender: UIButton) {
+        print("download")
     }
 }
 
