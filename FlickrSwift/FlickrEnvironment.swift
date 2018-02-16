@@ -29,6 +29,7 @@ let flickrParamUserid = "user_id"
 let flickrParamPhotoSetId = "photoset_id"
 let flickrParamExtras = "extras"
 let flickrParamText = "text"
+let flickrParamTag = "tags"
 
 // ------------------------------------------------------------------------------------
 //The Flickr API includes a parameter named method.
@@ -161,9 +162,26 @@ class OAuth: NSObject {
 // =======================================================================================================================
 // MARK: - Flickr Methods
 
-public func getURLForString(_ str:String) -> URL? {
+//- (NSURL *)getURLForString:(NSString *)str tags:(NSString *)tags {
+//
+//    NSDictionary *parameters = @{
+//        flickrParamMethod : flickrMethodSearchPhotos,
+//        flickrParamAppKey : sharkAPIKey,
+//        flickrParamText : str,
+//        flickrParamTag : tags,
+//        flickrParamTagMode : @"all",
+//        flickrParamExtras : @"url_t, url_s, url_m, url_sq",
+//    };
+//
+//    NSURL *URL = [self buildFlickrURLWithParameters:parameters];
+//
+//    return URL;
+//}
+
+public func getURLForString(_ str:String, tags: String) -> URL? {
     let parameters = [flickrParamMethod : flickrMethodSearchPhotos,
                       flickrParamAppKey : flickrAPIKey,
+                      flickrParamTag : tags,
                       flickrParamText : str, flickrParamExtras : "url_t, url_s, url_m, url_sq"]
     
     return buildFlickrURLWith(flickrBaseURL, parameters: parameters)

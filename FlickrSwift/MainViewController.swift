@@ -13,24 +13,27 @@ class MainViewController: UIViewController {
     var photos:PhotoStuff?
     var downloadItems = [ImageDownloadItem]()
     var downloadItem:ImageDownloadItem?
+    let searchText = "Shark"
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchFlickrPhotoWithSearchString("Ric");
+        fetchFlickrPhoto(searchText, tags: "[shark, ocean]")
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "Flickr Viewer"
+        self.title = "Sea Life"
     }
     
     // -----------------------------------------------------------------------------------------------------
     // MARK: - NSURLSesson
     
-    func fetchFlickrPhotoWithSearchString(_ searchString:String) {
-        guard let url = getURLForString("Ric") else {
+    
+    func fetchFlickrPhoto(_ searchString:String, tags:String) {
+        guard let url = getURLForString(searchString, tags: tags) else {
             return
         }
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
@@ -96,6 +99,7 @@ extension MainViewController: UICollectionViewDataSource {
             self.downloadImageAtURL(url!, completion: {(image:UIImage?, error:NSError?) in
                 if let myImage = image {
                     photoImageView.image = myImage
+                    self.downloadItem?.image = myImage
                 } else if let myError = error {
                     print("*** ERROR in cell: \(myError.userInfo)")
                 }
@@ -111,6 +115,7 @@ extension MainViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             let destinationViewController = segue.destination as? DetailViewController
+            destinationViewController?.title = downloadItem?.photoInfo?.title
             destinationViewController?.downloadItem = downloadItem
         }
     }

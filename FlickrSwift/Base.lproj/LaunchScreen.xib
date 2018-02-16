@@ -17,27 +17,31 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="sCo-UX-4qB">
-                    <rect key="frame" x="97" y="274" width="181" height="118"/>
+                    <rect key="frame" x="97" y="280" width="181" height="107"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SharkFeed Logo" translatesAutoresizingMaskIntoConstraints="NO" id="dFg-lo-SZD">
                             <rect key="frame" x="0.0" y="0.0" width="181" height="85"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SharkFeed" translatesAutoresizingMaskIntoConstraints="NO" id="RPt-Wh-ejC">
-                            <rect key="frame" x="1" y="91" width="179" height="27"/>
+                            <rect key="frame" x="39" y="91" width="103" height="16"/>
                         </imageView>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="RPt-Wh-ejC" firstAttribute="leading" secondItem="sCo-UX-4qB" secondAttribute="leading" constant="39" id="knf-3G-MHP"/>
+                    </constraints>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.0550724566" green="0.22618591790000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="sCo-UX-4qB" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="8Dt-sB-c3j"/>
-                <constraint firstItem="sCo-UX-4qB" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QYI-Vu-cHI"/>
+                <constraint firstItem="sCo-UX-4qB" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="93O-hf-faf"/>
+                <constraint firstItem="sCo-UX-4qB" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Azq-eC-BLl"/>
+                <constraint firstItem="sCo-UX-4qB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="97" id="ko7-34-XsW"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
         </view>
     </objects>
     <resources>
-        <image name="SharkFeed" width="179" height="27"/>
+        <image name="SharkFeed" width="104" height="16"/>
         <image name="SharkFeed Logo" width="181" height="85"/>
     </resources>
 </document>
