@@ -48,6 +48,17 @@ class DetailViewController: UIViewController {
             })
         }
     }
+    
+    // -----------------------------------------------------------------------------------------------------
+    // Action methods
+    
+    @IBAction func openInAppAction(_ sender: UIButton) {
+    }
+    
+    // -----------------------------------------------------------------------------------------------------
+    
+    @IBAction func downloadAction(_ sender: UIButton) {
+    }
 }
 
 
