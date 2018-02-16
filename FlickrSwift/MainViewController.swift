@@ -12,7 +12,7 @@ var gSelectedItemIndex:Int = 0
 class MainViewController: UIViewController {
     var photos:PhotoStuff?
     var downloadItems = [ImageDownloadItem]()
-    var downloadItem:ImageDownloadItem?
+    var itemID = 0
     let searchText = "Shark"
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -88,24 +88,25 @@ extension MainViewController: UICollectionViewDataSource {
     // -----------------------------------------------------------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: AnyObject = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for:indexPath)
-        let photoImageView = cell.viewWithTag!(1) as! UIImageView
-        downloadItem = downloadItems[indexPath.item]
-
-        if let image = downloadItem?.image {
+        let cell:UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for:indexPath)
+        let photoImageView = cell.viewWithTag(1) as! UIImageView
+        downloadItems[indexPath.item].itemID = indexPath.item
+    
+        if let image = downloadItems[indexPath.item].image {
             photoImageView.image = image
-        } else if let urlSQ = downloadItem?.photoInfo?.url_sq {
+        } else if let urlSQ = downloadItems[indexPath.item].photoInfo?.url_sq {
             let url = URL(string:urlSQ)
             self.downloadImageAtURL(url!, completion: {(image:UIImage?, error:NSError?) in
                 if let myImage = image {
                     photoImageView.image = myImage
-                    self.downloadItem?.image = myImage
+                    self.downloadItems[indexPath.item].image = myImage
                 } else if let myError = error {
                     print("*** ERROR in cell: \(myError.userInfo)")
                 }
             }) // ...end completion.
         }
-        return cell as! UICollectionViewCell
+        cell.tag = indexPath.item
+        return cell
     }
 }
 
@@ -113,10 +114,13 @@ extension MainViewController: UICollectionViewDataSource {
 
 extension MainViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let cell = sender as? UICollectionViewCell else {
+            return
+        }
+        itemID = cell.tag
         if segue.identifier == "showDetail" {
             let destinationViewController = segue.destination as? DetailViewController
-            destinationViewController?.title = downloadItem?.photoInfo?.title
-            destinationViewController?.downloadItem = downloadItem
+            destinationViewController?.mainViewController = self
         }
     }
 }

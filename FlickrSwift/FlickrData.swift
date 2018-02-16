@@ -56,6 +56,7 @@ public struct PhotoListModel: Codable {
 // -----------------------------------------------------------------------------------------------------
 
 struct ImageDownloadItem {
+    var itemID = 0
     var image:UIImage?
     var bigImage:UIImage?
     var photoInfo:PhotoInfo?
@@ -69,7 +70,6 @@ struct ImageDownloadItem {
         let myString = NSString(format:"{ImageDownloadItem} desc: %@", descString!)
         return myString
     }
-    
 }
 
 // ===================================================================================================

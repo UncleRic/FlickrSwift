@@ -162,22 +162,6 @@ class OAuth: NSObject {
 // =======================================================================================================================
 // MARK: - Flickr Methods
 
-//- (NSURL *)getURLForString:(NSString *)str tags:(NSString *)tags {
-//
-//    NSDictionary *parameters = @{
-//        flickrParamMethod : flickrMethodSearchPhotos,
-//        flickrParamAppKey : sharkAPIKey,
-//        flickrParamText : str,
-//        flickrParamTag : tags,
-//        flickrParamTagMode : @"all",
-//        flickrParamExtras : @"url_t, url_s, url_m, url_sq",
-//    };
-//
-//    NSURL *URL = [self buildFlickrURLWithParameters:parameters];
-//
-//    return URL;
-//}
-
 public func getURLForString(_ str:String, tags: String) -> URL? {
     let parameters = [flickrParamMethod : flickrMethodSearchPhotos,
                       flickrParamAppKey : flickrAPIKey,
