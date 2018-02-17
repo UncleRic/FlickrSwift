@@ -15,6 +15,10 @@ class DetailViewController: UIViewController {
     var mainViewController:MainViewController?
     var downloadItems:[ImageDownloadItem]?
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let sender = mainViewController else {
